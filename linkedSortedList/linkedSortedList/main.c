@@ -17,12 +17,25 @@ int main(int argc, char* argv[])
 		printf("Error! File %s %s", argv[1], "can't be open or not exists!\n");
 		return 1;
 	}
-	fscanf(filePtr, "%s", s);
-	printf("Main list size is: %s %c", s, '\n');
 	
-	listSize = atoi(s);
+	//Read list size
+	fscanf(filePtr, "%s", s);
+	if(!(listSize = atoi(s)) || (listSize <= 0))
+	{
+		printf("List size must be digit, more, than 0, but found: %s\n", s);
+		return 1;
+	}
 	printf("Int val listSize: %d %c", listSize, '\n');
-
+	
+	//Read string before end of line listSize
+	do
+	{
+		fscanf(filePtr, "%s", s);
+		
+	}while(s[0] != '\n' &&  !EOF);
+	
+	printf("%s\n", s);
+	
 	fclose(filePtr);
 	printf("Success!!!\n");
 	return 0;
