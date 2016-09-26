@@ -19,6 +19,9 @@ int main(int argc, char* argv[])
 	}
 	fscanf(filePtr, "%s", s);
 	printf("Main list size is: %s %c", s, '\n');
+	
+	listSize = atoi(s);
+	printf("Int val listSize: %d %c", listSize, '\n');
 
 	fclose(filePtr);
 	printf("Success!!!\n");

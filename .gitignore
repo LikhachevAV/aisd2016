@@ -41,3 +41,5 @@
 *.idb
 *.filters
 *.opendb
+Makefile.win
+*.dev
