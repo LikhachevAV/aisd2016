@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
 	FILE *filePtr;
-	char s[10];
+	char s[10] = "";
+	char ch;
 	int listSize = 0;
 	if (argc != 2)
 	{
@@ -19,8 +21,7 @@ int main(int argc, char* argv[])
 	}
 	
 	//Read list size
-	fscanf(filePtr, "%s", s);
-	if(!(listSize = atoi(s)) || (listSize <= 0))
+	if(!(fscanf(filePtr, "%s", s)) || !(listSize = atoi(s)) || (listSize <= 0))
 	{
 		printf("List size must be digit, more, than 0, but found: %s\n", s);
 		return 1;
@@ -30,9 +31,9 @@ int main(int argc, char* argv[])
 	//Read string before end of line listSize
 	do
 	{
-		fscanf(filePtr, "%s", s);
+		ch = fgetc(filePtr);
 		
-	}while(s[0] != '\n' &&  !EOF);
+	}while(s[0] != '\n' &&  !feof(filePtr));
 	
 	printf("%s\n", s);
 	
