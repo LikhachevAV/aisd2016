@@ -43,3 +43,5 @@
 *.opendb
 Makefile.win
 *.dev
+linkedSortedList.vcxproj.user
+*.TMP

@@ -33,9 +33,23 @@ int main(int argc, char* argv[])
 	{
 		ch = fgetc(filePtr);
 		
-	}while(s[0] != '\n' &&  !feof(filePtr));
+	}while((ch != '\n') &&  !feof(filePtr));
+
+	while (!feof(filePtr))
+	{
+		while (fscanf(filePtr, "%s", s))
+		{
+			//TODO: добавить преобразование сроки в число и обработку ошибок
+			printf("%s ", s);
+			if ((getc(filePtr) == '\n') || feof(filePtr))
+			{
+				break;
+			}
+		}
+		printf("%c", '\n');
+	}
 	
-	printf("%s\n", s);
+	//printf("%s\n", s); //debug
 	
 	fclose(filePtr);
 	printf("Success!!!\n");
