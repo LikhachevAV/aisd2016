@@ -1,0 +1,2 @@
+Invalid arguments count!
+Usage: bin2dec.exe <binary number>

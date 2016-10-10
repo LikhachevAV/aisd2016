@@ -18,9 +18,15 @@ bool isPossibleSymbol(const char c)
 	return 0;
 }
 
-int main(int artc, char* argv[])
+int main(int argc, char* argv[])
 {
-	cout << isPossibleSymbol('s') << endl;
+	if (argc != 2)
+	{
+		cout << "Invalid arguments count!" << endl
+			<< "Usage: bin2dec.exe <binary number>" << endl;
+
+		return 1;
+	}
 
 
 	return 0;
