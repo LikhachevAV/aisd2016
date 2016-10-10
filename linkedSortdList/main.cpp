@@ -1,5 +1,5 @@
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -20,13 +20,15 @@ bool isPossibleSymbol(const char c)
 
 int main(int argc, char* argv[])
 {
-	if (argc != 2)
+	if (argc != 3)
 	{
 		cout << "Invalid arguments count!" << endl
-			<< "Usage: bin2dec.exe <binary number>" << endl;
+			<< "Usage: linkedSortedList.exe <input file> <output file>" << endl;
 
 		return 1;
 	}
+
+
 
 
 	return 0;

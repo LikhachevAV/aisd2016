@@ -7,6 +7,13 @@ if NOT ERRORLEVEL 1 goto err
 fc.exe out_files\parameters_count_error.txt %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
 
+rem проверяем запуск c 1м параметром
+echo run program with just one parameter:
+%PROGRAM% empty_file.txt > %TEMP%\output.txt
+if NOT ERRORLEVEL 1 goto err
+fc.exe out_files\parameters_count_error.txt %TEMP%\output.txt
+if ERRORLEVEL 1 goto err
+
 goto success
 
 rem проверка запуска с числом, длиной 33 в качестве параметра
