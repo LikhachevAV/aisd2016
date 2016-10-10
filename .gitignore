@@ -45,3 +45,6 @@ Makefile.win
 *.dev
 linkedSortedList.vcxproj.user
 *.TMP
+*.layout
+*.enc
+*.vcxproj
