@@ -1,2 +1,2 @@
 Invalid argument type!
-Usage: bin2dec.exe <binary number>
+Usage: linkedSortedList.exe <input file> <output file>

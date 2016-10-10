@@ -1,1 +1,1 @@
-Error! File not_existing_file.txt can't be open or not exists!
+Error! Failed to open no_file.txt for reading

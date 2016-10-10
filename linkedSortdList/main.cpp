@@ -28,8 +28,12 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-
-
+	ifstream inputFile(argv[1]);
+	if (!inputFile.is_open())
+	{
+		cout <<"Error! Failed to open " << argv[1] << " for reading" << endl;
+		return 1;
+	}
 
 	return 0;
 }

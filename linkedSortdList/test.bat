@@ -14,6 +14,13 @@ if NOT ERRORLEVEL 1 goto err
 fc.exe out_files\parameters_count_error.txt %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
 
+rem проверяем запуск с несуществующим файлом для чтения в качестве параметра
+echo run program with no file for reading as parameter:
+%PROGRAM% no_file.txt empty_file.txt > %TEMP%\output.txt
+if NOT ERRORLEVEL 1 goto err
+fc.exe out_files\parameters_count_error.txt %TEMP%\output.txt
+if ERRORLEVEL 1 goto err
+
 goto success
 
 rem проверка запуска с числом, длиной 33 в качестве параметра
