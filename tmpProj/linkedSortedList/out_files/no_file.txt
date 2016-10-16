@@ -1,1 +1,0 @@
-Error! File not_existing_file.txt can't be open or not exists!

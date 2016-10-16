@@ -1,2 +1,0 @@
-Argument count error!
-Usage: linkedSortedList.exe <fileName>
