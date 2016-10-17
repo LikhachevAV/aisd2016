@@ -1,6 +1,6 @@
 set PROGRAM="%~1"
 
-rem проверка левой крайней границы (с числом 0 в качестве параметра)
+rem проверка запуска без параметров
 echo run program without arguments:
 %PROGRAM% > %TEMP%\output.txt
 if NOT ERRORLEVEL 1 goto err
@@ -21,8 +21,6 @@ if NOT ERRORLEVEL 1 goto err
 fc.exe out_files\no_file_out.txt %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
 
-goto success
-:success
 echo Program testing succeeded
 exit 0
 
