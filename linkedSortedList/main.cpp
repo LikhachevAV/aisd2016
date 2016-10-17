@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 const unsigned ARR_SIZE = 12;
-char POSSIBLE_SYMBOLS[ARR_SIZE] = { '+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+char POSSIBLE_SYMBOLS[ARR_SIZE] = {'+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+enum streamReadStatus { noSymbol, ok, eoln, eof, error };
 
 bool isPossibleSymbol(const char c)
 {
@@ -16,6 +18,17 @@ bool isPossibleSymbol(const char c)
 		}
 	}
 	return 0;
+}
+
+enum streamReadStatus readNumber(const istream & stream, int & outNumber, string & errorMsg)
+{	
+	char ch;
+	string s = "";
+	while (1)
+	{
+
+	}
+	return streamReadStatus::ok;
 }
 
 int main(int argc, char* argv[])
