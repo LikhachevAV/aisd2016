@@ -21,6 +21,13 @@ if NOT ERRORLEVEL 1 goto err
 fc.exe out_files\no_file_out.txt %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
 
+rem проверяем запуск с выводом количества элементов в массиве'
+echo run program with number of array elements = 34':
+%PROGRAM% 34.txt empty_file.txt > %TEMP%\output.txt
+if ERRORLEVEL 1 goto err
+fc.exe out_files\34_out.txt %TEMP%\output.txt
+if ERRORLEVEL 1 goto err
+
 echo Program testing succeeded
 exit 0
 
