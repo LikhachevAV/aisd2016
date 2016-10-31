@@ -1,52 +1,24 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+// istream_iterator example
+#include <iostream>     // cin, cout
+#include <iterator>     // istream_iterator
 
 using namespace std;
 
-const unsigned ARR_SIZE = 12;
-char POSSIBLE_SYMBOLS[ARR_SIZE] = {'+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-enum streamReadStatus { noSymbol, ok, eoln, eof, error };
+int main() {
+	double value1, value2;
+	cout << "Please, insert  values: ";
 
-bool isPossibleSymbol(const char c)
-{
-	for (int i = 0; i < ARR_SIZE; ++i)
+	istream_iterator<double> eos;              // end-of-stream iterator
+	istream_iterator<double> iit(cin);   // stdin iterator
+
+	cout << "Inserted values: ";
+
+	while (iit != eos)
 	{
-		if (c == POSSIBLE_SYMBOLS[i])
-		{
-			return 1;
-		}
+		cout << *iit << " ";
+		++iit;
 	}
-	return 0;
-}
-
-enum streamReadStatus readNumber(const istream & stream, int & outNumber, string & errorMsg)
-{	
-	char ch;
-	string s = "";
-	while (1)
-	{
-
-	}
-	return streamReadStatus::ok;
-}
-
-int main(int argc, char* argv[])
-{
-	if (argc != 3)
-	{
-		cout << "Invalid arguments count!" << endl
-			<< "Usage: linkedSortedList.exe <input file> <output file>" << endl;
-
-		return 1;
-	}
-
-	ifstream inputFile(argv[1]);
-	if (!inputFile.is_open())
-	{
-		cout << "Error! Failed to open " << argv[1] << " for reading" << endl;
-		return 1;
-	}
+	cout << endl;
 
 	return 0;
 }
