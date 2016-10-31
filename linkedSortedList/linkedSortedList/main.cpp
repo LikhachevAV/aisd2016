@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <iostream>     
 #include <iterator>     
 #include <fstream>
@@ -67,19 +68,23 @@ int main(int argc, char* argv[]) {
 
 	ifstream inputFile(argv[1]);
 	int listSize = GetListSize(inputFile);
-	Node *head = new Node;
-	Node list[100];
+	vector <Node*> heads(listSize);
+	int currentListSize = 0;
 
-	while (!inputFile.eof())
+	while (!inputFile.eof() && currentListSize < listSize)
 	{
-		// read line
+		char* strLine[256] = {};
+		ReadLine(inputFile, strLine);
+		Node *head = new Node;
+		StrToLinkedList(strLine, head);
+		heads.push_back(head);
 		// convert it to linked list
 		// insert it to array
-
+		++currentListSize;
 	}
 
-	cout << "Inserted values: ";
-	PrintNode(head);
+	vector<int>::iterator it = heads.begin;
+	//PrintNode(heads.*begin);
 	cout << endl;
 
 	return 0;

@@ -1,2 +1,0 @@
-Invalid arguments count!
-Usage: linkedSortedList.exe <input file> <output file>

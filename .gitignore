@@ -4,3 +4,5 @@ Debug
 *.db
 *.filters
 *.user
+*.ipch
+_linkedSortedList

@@ -1,2 +1,0 @@
-Invalid argument type!
-Usage: linkedSortedList.exe <input file> <output file>
