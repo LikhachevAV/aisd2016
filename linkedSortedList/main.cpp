@@ -1,6 +1,7 @@
 #include <iostream>     
 #include <iterator>     
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 struct Node {
@@ -32,22 +33,39 @@ void PrintNode(Node* node)
 	node = tmpNode;
 }
 
+int GetListSize(istream & file)
+{
+	int result = -1;
+	file >> result;
+	return result;
+}
+
 int main(int argc, char* argv[]) {
 
-	cout << "Please, insert  values: ";
-
 	ifstream inputFile(argv[1]);
-
-	istream_iterator<int> eos;				 // end-of-stream iterator
-	istream_iterator<int> iit(inputFile);     // stdin iterator
-
+	int listSize = GetListSize(inputFile);
+	cout << endl;
 	Node *head = new Node;
+	char s[256];
+	 //sstream;
 
-	while (iit != eos)
+	while (!inputFile.eof())
 	{
-		AddNode(head, *iit);
-		++iit;
+		istream_iterator<int> eos;
+		istream_iterator<int> iit;
+		inputFile.getline(s, 256);
+		stringstream sstream;
+		sstream.str(s);
+		 iit = sstream;
+		while (iit != eos)
+		{
+			AddNode(head, *iit);
+			++iit;
+		}
+		cout << endl;
 	}
+
+	
 	cout << "Inserted values: ";
 	PrintNode(head);
 	cout << endl;
