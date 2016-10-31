@@ -1,7 +1,6 @@
-// istream_iterator example
-#include <iostream>     // cin, cout
-#include <iterator>     // istream_iterator
-
+#include <iostream>     
+#include <iterator>     
+#include <fstream>
 using namespace std;
 
 struct Node {
@@ -33,12 +32,14 @@ void printNode(Node* node)
 	node = tmpNode;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
 	cout << "Please, insert  values: ";
 
-	istream_iterator<double> eos;        // end-of-stream iterator
-	istream_iterator<double> iit(cin);   // stdin iterator
+	ifstream inputFile(argv[1]);
+
+	istream_iterator<double> eos;				 // end-of-stream iterator
+	istream_iterator<double> iit(inputFile);     // stdin iterator
 
 	Node *head = new Node;
 
