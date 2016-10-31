@@ -86,7 +86,6 @@ int main(int argc, char* argv[]) {
 		cout << endl;
 	}
 
-	
 	cout << "Inserted values: ";
 	PrintNode(head);
 	cout << endl;
