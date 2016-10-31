@@ -40,6 +40,28 @@ int GetListSize(istream & file)
 	return result;
 }
 
+void ReadLine(istream & file, char* str[])
+{
+	char ch;
+	while ((ch = file.get()) != '\n')
+	{
+		str += ch;
+	};
+}
+
+void StrToLinkedList(char* str[], Node * root)
+{
+	istream_iterator<int> eos;
+	stringstream stringStream;
+	stringStream << str;
+	istream_iterator<int> iit(stringStream);
+	while (iit != eos)
+	{
+		AddNode(root, *iit);
+		++iit;
+	}
+}
+
 int main(int argc, char* argv[]) {
 
 	ifstream inputFile(argv[1]);
@@ -47,7 +69,6 @@ int main(int argc, char* argv[]) {
 	cout << endl;
 	Node *head = new Node;
 	char s[256];
-	 //sstream;
 
 	while (!inputFile.eof())
 	{
