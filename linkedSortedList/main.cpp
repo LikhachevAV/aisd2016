@@ -4,11 +4,11 @@
 using namespace std;
 
 struct Node {
-	double value;
+	int value;
 	Node *next = NULL;
 };
 
-void addNode(Node* node, double value)
+void AddNode(Node* node, int value)
 {
 	Node *tmpNode = node;
 	while (node->next != NULL)
@@ -21,7 +21,7 @@ void addNode(Node* node, double value)
 	node = tmpNode;
 }
 
-void printNode(Node* node)
+void PrintNode(Node* node)
 {
 	Node *tmpNode = node;
 	while (node->next != NULL)
@@ -38,18 +38,18 @@ int main(int argc, char* argv[]) {
 
 	ifstream inputFile(argv[1]);
 
-	istream_iterator<double> eos;				 // end-of-stream iterator
-	istream_iterator<double> iit(inputFile);     // stdin iterator
+	istream_iterator<int> eos;				 // end-of-stream iterator
+	istream_iterator<int> iit(inputFile);     // stdin iterator
 
 	Node *head = new Node;
 
 	while (iit != eos)
 	{
-		addNode(head, *iit);
+		AddNode(head, *iit);
 		++iit;
 	}
 	cout << "Inserted values: ";
-	printNode(head);
+	PrintNode(head);
 	cout << endl;
 
 	return 0;
