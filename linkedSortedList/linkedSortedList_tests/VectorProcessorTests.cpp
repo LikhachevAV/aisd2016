@@ -1,38 +1,54 @@
 ﻿#include "stdafx.h"
-#include "..\linkedSortedList\VectorProcessor.h"
+#include <string> 
+#include <iostream>
+#include <sstream>
 
 using namespace std;
 
-bool VectorsAreEqual(vector<double> const& x, vector<double> const& y)
+enum struct ReadStatus {Error, Ok, Eoln, Eof};
+
+ReadStatus ReadIntFromStream(istream & inpt, int & result, string & error)
 {
-	return x == y;
+
+
+	if (inpt.eof())
+	{
+		return ReadStatus::Eof;
+	}
+
+	if (inpt >> result, " ")
+	{
+		return ReadStatus::Ok;
+	}
+
+	if (inpt.get() == '\n')
+	{
+		return ReadStatus::Eoln;
+	}
+
+	error = "Input stream reading error!";
+	return ReadStatus::Error;
 }
 
 // Функция ProcessVector
-BOOST_AUTO_TEST_SUITE(ProcessVector_function)
+BOOST_AUTO_TEST_SUITE(ReadInt)
 
-	// Создает пустой вектор из пустого вектора
-	BOOST_AUTO_TEST_CASE(dont_change_empty_vector)
-	{
-		vector<double> emptyVector;
-		ProcessVector(emptyVector);
-		BOOST_CHECK(emptyVector.empty());
-	}
-
-BOOST_AUTO_TEST_CASE(squaring_vector_from_just_one_element)
+BOOST_AUTO_TEST_CASE(check_stream_reading)
 {
-	vector<double> myVector = { -7.0 };
-	vector<double> expectedVector = { 49.0 };
-	ProcessVector(myVector);
-	BOOST_CHECK(VectorsAreEqual(myVector, expectedVector));
-}
+	stringstream ss;
+	ss.str("123 0 12");
+	int result;
+	string error;
+	ReadStatus status;
+	status = ReadStatus::Ok;
 
-	BOOST_AUTO_TEST_CASE(multiply_every_vectors_element_on_min_element)
+	while (status != ReadStatus::Error)
 	{
-		vector<double> myVector = { 0.0, 1.0, -5.0 };
-		vector<double> expectedVector = { 0.0, -5.0, 25.0 };
-		ProcessVector(myVector);
-		BOOST_CHECK(VectorsAreEqual(myVector, expectedVector));
+		status = ReadIntFromStream(ss, result, error);
+		cout << "result: " << result << ", error: " << error << endl;
 	}
+
+	BOOST_CHECK(true);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
