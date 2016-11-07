@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B0F99CB0-77FA-4202-A68A-F2762B5C9060}</ProjectGuid>
+    <ProjectGuid>{36989725-2689-436E-8ADA-B1D27B0642C7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>task1</RootNamespace>
-    <ProjectName>linkedSortedList</ProjectName>
+    <RootNamespace>task1_tests</RootNamespace>
+    <ProjectName>linkedSortedList_tests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,27 +69,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:sdk\SFML-2.4.0\include;D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\sdk\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <IncludePath>D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;D:\sdk\boost_1_61_0\libs</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\sdk\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <LibraryPath>$(LibraryPath);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;D:\sdk\boost_1_61_0\libs</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:sdk\SFML-2.4.0\include;D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\sdk\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <IncludePath>D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;D:\sdk\boost_1_61_0\libs</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\sdk\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\sdk\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <LibraryPath>$(LibraryPath);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;D:\sdk\boost_1_61_0\libs</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,17 +94,17 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <ExceptionHandling>Async</ExceptionHandling>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TargetPath)</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Run tests</Message>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+      <Message>Running unit tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -118,17 +114,17 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <ExceptionHandling>Async</ExceptionHandling>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TargetPath)</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Run tests</Message>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+      <Message>Running unit tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,6 +136,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <ExceptionHandling>Async</ExceptionHandling>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -149,10 +146,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TargetPath)</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Run tests</Message>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+      <Message>Running unit tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,6 +159,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <ExceptionHandling>Async</ExceptionHandling>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -173,30 +169,27 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TargetPath)</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Run tests</Message>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+      <Message>Running unit tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="VectorProcessor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\linkedSortedList\VectorProcessor.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="VectorProcessor.cpp" />
+    <ClCompile Include="task1_tests.cpp" />
+    <ClCompile Include="VectorProcessorTests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
