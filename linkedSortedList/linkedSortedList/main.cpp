@@ -22,6 +22,7 @@ void AddNode(Node* node, int value)
 	node->next = new Node;
 	node->next->next = NULL;
 	node->value = value;
+	cout << "value: " << value << endl; //debug
 	node = tmpNode;
 }
 
@@ -80,7 +81,7 @@ int main(int argc, char* argv[]) {
 	int currentListSize = 0;
 	vector<Node*> heads(listSize);
 
-	while (!inputFile.eof() && currentListSize < listSize)
+	while (!inputFile.eof() && currentListSize <= listSize)
 	{
 		Node *head = new Node;
 		if (ReadLineToLinkedList(inputFile, head))
@@ -90,11 +91,11 @@ int main(int argc, char* argv[]) {
 		}
 		heads.push_back(head);
 		++currentListSize;
-		cout << "currentListSize: " << currentListSize << endl;
 	}
 
 	cout << "Inserted values: ";
-	PrintNode(heads[0]);
+	Node *tmpNode = heads[0];
+	PrintNode(tmpNode);
 	cout << endl;
 
 	return 0;
