@@ -3,7 +3,7 @@
 #include <iterator>     
 #include <fstream>
 #include <sstream>
-#include "main.h"
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +12,7 @@ struct Node {
 	Node *next = NULL;
 };
 
-void AddNode(Node* node, int value)
+void AddValueToNode(Node* node, int value)
 {
 	Node *tmpNode = node;
 	while (node->next != NULL)
@@ -22,7 +22,6 @@ void AddNode(Node* node, int value)
 	node->next = new Node;
 	node->next->next = NULL;
 	node->value = value;
-	cout << "value: " << value << endl; //debug
 	node = tmpNode;
 }
 
@@ -53,7 +52,7 @@ int ReadLineToLinkedList(istream & file, Node * node)
 	int val;
 	while (ss >> val)
 	{
-		AddNode(node, val);
+		AddValueToNode(node, val);
 	}
 	if (ss.bad())
 	{
@@ -62,9 +61,27 @@ int ReadLineToLinkedList(istream & file, Node * node)
 	return 0;
 }
 
+int ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string & error)
+{
+	int listSize = GetListSize(file);
+	int currentListSize = 0;
+	while (!file.eof() && currentListSize <= listSize)
+	{
+		Node *node = new Node;
+		if (!ReadLineToLinkedList(file, node))
+		{
+			error = "Input file reading error!";
+			return 1;
+		}
+		nodes.push_back(node);
+		++currentListSize;
+	}
+	return 0;
+}
+
 int main(int argc, char* argv[]) {
 
-	if (argc < 1)
+	if (argc < 2)
 	{
 		cout << "Argument count error!";
 		return 1;
@@ -77,26 +94,17 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	int listSize = GetListSize(inputFile);
-	int currentListSize = 0;
-	vector<Node*> heads(listSize);
-
-	while (!inputFile.eof() && currentListSize <= listSize)
+	vector<Node*> heads;
+	string error;
+	if (!ReadFileToLinkedListsVector(inputFile, heads, error))
 	{
-		Node *head = new Node;
-		if (ReadLineToLinkedList(inputFile, head))
-		{
-			cout << "Input file reading error!";
-			return 1;
-		}
-		heads.push_back(head);
-		++currentListSize;
+		cout << error;
+		return 1;
 	}
 
 	cout << "Inserted values: ";
-	Node *tmpNode = heads[0];
-	PrintNode(tmpNode);
+	
+	PrintNode(heads[0]);
 	cout << endl;
-
 	return 0;
 }
