@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include <iostream>     
 #include <iterator>     
 #include <fstream>
@@ -39,11 +39,12 @@ void PrintNode(Node* node)
 int GetListSize(istream & file)
 {
 	int result = -1;
-	file >> result;
-	return result;
+	file >> result;	
+	while (file.get() != '\n') {} // Пропускаем символы до конца строки
+ 	return result;
 }
 
-int ReadLineToLinkedList(istream & file, Node * node)
+bool ReadLineToLinkedList(istream & file, Node * node)
 {
 	stringstream ss;
 	string line;
@@ -53,16 +54,15 @@ int ReadLineToLinkedList(istream & file, Node * node)
 	while (ss >> val)
 	{
 		AddValueToNode(node, val);
-		cout << val << ' '; //Debug
 	}
 	if (ss.bad())
 	{
-		return 1;
+		return false;
 	}
-	return 0;
+	return true;
 }
 
-int ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string & error)
+bool ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string & error)
 {
 	int listSize = GetListSize(file);
 	int currentListSize = 0;
@@ -72,12 +72,12 @@ int ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string & 
 		if (!ReadLineToLinkedList(file, node))
 		{
 			error = "Input file reading error!";
-			return 1;
+			return false;
 		}
 		nodes.push_back(node);
 		++currentListSize;
 	}
-	return 0;
+	return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -106,6 +106,8 @@ int main(int argc, char* argv[]) {
 	cout << "Inserted values: ";
 	
 	PrintNode(heads[0]);
+	cout << endl;
+	PrintNode(heads[1]);
 	cout << endl;
 	return 0;
 }
