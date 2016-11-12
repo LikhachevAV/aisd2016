@@ -53,6 +53,7 @@ int ReadLineToLinkedList(istream & file, Node * node)
 	while (ss >> val)
 	{
 		AddValueToNode(node, val);
+		cout << val << ' '; //Debug
 	}
 	if (ss.bad())
 	{
@@ -86,11 +87,11 @@ int main(int argc, char* argv[]) {
 		cout << "Argument count error!";
 		return 1;
 	}
-
+	
 	ifstream inputFile(argv[1]);
-	if (!inputFile)
+	if (!inputFile.is_open())
 	{
-		cout << "File " << argv[1] << "reading error ";
+		cout << "File " << argv[1] << " reading error!";
 		return 1;
 	}
 
