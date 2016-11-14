@@ -13,16 +13,15 @@ struct Node {
 	Node *next = NULL;
 };
 
-void AddValueToNode(Node* node, int value)
+void AddValueToNode(Node * & node, int value)
 {
 	Node *tmpNode = node;
 	while (node->next != NULL)
 	{
 		node = node->next;
 	}
-	node->next = new Node;
-	node->next->next = NULL;
 	node->value = value;
+	node->next = new Node;
 	node = tmpNode;
 }
 
@@ -96,16 +95,19 @@ void MergeVectorToSortedList(vector<Node*> & const list, Node *sortedList)
 		sorted = true;
 		for (int i = 0; i < list.size(); ++i)
 		{
-			if ((list[i] != NULL) && (list[i]->value < minVal))
+			if ((list[i]->next != NULL) && (list[i]->value < minVal))
 			{
 				minValIndex = i;
 				minVal = list[i]->value;
 			}
-			sorted = sorted && (list[i] == NULL);
+			sorted = sorted && (list[i]->next == NULL);
 		}
 		AddValueToNode(sortedList, minVal);
 		Node * tmpNode = list[minValIndex];
-		list[minValIndex] = list[minValIndex]->next;
+		if (list[minValIndex] != NULL)
+		{
+			list[minValIndex] = list[minValIndex]->next;
+		}
 		delete tmpNode;
 	}
 }
