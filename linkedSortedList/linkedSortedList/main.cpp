@@ -102,12 +102,12 @@ void MergeVectorToSortedList(vector<Node*> & const list, Node *sortedList)
 			}
 			sorted = sorted && (list[i]->next == NULL);
 		}
-		AddValueToNode(sortedList, minVal);
-		Node * tmpNode = list[minValIndex];
-		if (list[minValIndex] != NULL)
+		if (!sorted)
 		{
-			list[minValIndex] = list[minValIndex]->next;
+			AddValueToNode(sortedList, minVal);
 		}
+		Node * tmpNode = list[minValIndex];
+		list[minValIndex] = list[minValIndex]->next;
 		delete tmpNode;
 	}
 }
