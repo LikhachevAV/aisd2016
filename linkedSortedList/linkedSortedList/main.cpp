@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -40,7 +41,7 @@ int GetListSize(istream & file)
 {
 	int result = -1;
 	file >> result;	
-	while (file.get() != '\n') {} // Пропускаем символы до конца строки
+	while (file.get() != '\n') {} // Пропускаем символы до конца текущей строки
  	return result;
 }
 
@@ -65,8 +66,13 @@ bool ReadLineToLinkedList(istream & file, Node * node)
 bool ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string & error)
 {
 	int listSize = GetListSize(file);
+	if (listSize < 1)
+	{
+		error = "List size must be more, than 0!";
+		return false;
+	}
 	int currentListSize = 0;
-	while (!file.eof() && currentListSize <= listSize)
+	while (!file.eof() && currentListSize < listSize)
 	{
 		Node *node = new Node;
 		if (!ReadLineToLinkedList(file, node))
@@ -78,6 +84,30 @@ bool ReadFileToLinkedListsVector(istream & file, vector<Node*> & nodes, string &
 		++currentListSize;
 	}
 	return true;
+}
+
+void MergeVectorToSortedList(vector<Node*> & const list, Node *sortedList)
+{
+	bool sorted = false;
+	int minValIndex = 0;
+	while (!sorted) // Из цикла выходим, когда все элементы вектора NULL
+	{
+		int minVal = INT_MAX;
+		sorted = true;
+		for (int i = 0; i < list.size(); ++i)
+		{
+			if ((list[i] != NULL) && (list[i]->value < minVal))
+			{
+				minValIndex = i;
+				minVal = list[i]->value;
+			}
+			sorted = sorted && (list[i] == NULL);
+		}
+		AddValueToNode(sortedList, minVal);
+		Node * tmpNode = list[minValIndex];
+		list[minValIndex] = list[minValIndex]->next;
+		delete tmpNode;
+	}
 }
 
 int main(int argc, char* argv[]) {
@@ -103,11 +133,13 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	cout << "Inserted values: ";
-	
-	PrintNode(heads[0]);
-	cout << endl;
-	PrintNode(heads[1]);
-	cout << endl;
+	cout << "Sorted values: ";
+	Node *sortedList = new Node;
+	MergeVectorToSortedList(heads, sortedList);
+	PrintNode(sortedList);
+	//PrintNode(heads[0]);
+	//cout << endl;
+	//PrintNode(heads[1]);
+	//cout << endl;
 	return 0;
 }
