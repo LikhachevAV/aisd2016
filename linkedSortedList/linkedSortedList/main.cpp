@@ -139,9 +139,5 @@ int main(int argc, char* argv[]) {
 	Node *sortedList = new Node;
 	MergeVectorToSortedList(heads, sortedList);
 	PrintNode(sortedList);
-	//PrintNode(heads[0]);
-	//cout << endl;
-	//PrintNode(heads[1]);
-	//cout << endl;
 	return 0;
 }
