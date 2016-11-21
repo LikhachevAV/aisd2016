@@ -22,6 +22,7 @@
     <ProjectGuid>{84101E00-3DC5-42A6-AF02-1CECC8C788B4}</ProjectGuid>
     <RootNamespace>tree</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>familyTree</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
