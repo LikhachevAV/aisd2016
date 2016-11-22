@@ -24,6 +24,8 @@ Ann
 
 #include "stdafx.h"   
 #include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 const int DL = 20;          // максимальная длина
 
@@ -63,18 +65,18 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	read_from_file(Fin, &root);
-	printf("Бинарое дерево построено\n");
+	printf("Binary tree setup completed!\n");
 	getchar();
-	printf("Вывод из бинарного дерева сильно ветвящегося\n");
+	printf("Binary tree output\n");
 	back_from_bin(root);
 	getchar();
-	printf("Вывод бинарного дерева сверху вниз\n");
+	printf("Binary tree top to down output\n");
 	print_down_bin(root, 0);
 	getchar();
-	printf("Вывод бинарного дерева снизу вверх\n");
+	printf("Binary tree down to up output\n");
 	print_up_bin(root, 0);
 	getchar();
-	printf("Вывод бинарного дерева слева направо\n");
+	printf("Binary tree right to left output\n");
 	print_right_bin(root, 0);
 	getchar();
 }
@@ -88,7 +90,7 @@ int read_from_file(FILE *F, Tree **r)
 	t = 0;
 	while (!feof(F))
 	{
-		k = fscanf_s(F, "%s", buf);
+		k = fscanf_s(F, "%s", buf, _countof(buf));
 		len = strlen(buf);
 		if (len == 0) break;            // если конец файла в следующей строке
 		k = 0;
