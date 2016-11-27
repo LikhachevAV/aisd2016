@@ -42,7 +42,7 @@ struct Tree
 };
 
 int ReadTreeFromFile(FILE *F, Tree **r);  // чтение из файла, формирование дерева
-int FindTree(Tree *treePtr, Tree *result, char* name); // поиск листа дерева по имени
+int FindTree(Tree *treePtr, Tree **result, char* name); // поиск листа дерева по имени
 void back_from_bin(Tree *p);            // выдача исходное дерева из бинарного 
 void print_down_bin(Tree *p, int lev);  // выдача бинарного сверху вниз
 void print_up_bin(Tree *p, int lev);    // выдача бинарного снизу вверх
@@ -73,11 +73,11 @@ int main(int argc, char* argv[])
 	char* nameOfSecond = argv[3];
 
 	Tree *first = 0, *second = 0;
-	if (FindTree(root, first, nameOfFirst) != 0 )
+	if (FindTree(root, &first, nameOfFirst) != 0 )
 	{
 		printf("Human with name %s not found in the tree\n", nameOfFirst);
 	}
-	if (FindTree(root, second, nameOfSecond) != 0)
+	if (FindTree(root, &second, nameOfSecond) != 0)
 	{
 		printf("Human with name %s not found in the tree\n", nameOfSecond);
 	}
@@ -135,7 +135,7 @@ int ReadTreeFromFile(FILE *F, Tree **r)
 	return 0;
 }
 
-int FindTree(Tree *treePtr, Tree *result, char* name)
+int FindTree(Tree *treePtr, Tree **result, char* name)
 {
 	int find = 1;
 	if (treePtr != 0)
@@ -144,7 +144,7 @@ int FindTree(Tree *treePtr, Tree *result, char* name)
 		find *= FindTree(treePtr->left, result, name);
 		if (strcmp(name, treePtr->name) == 0)
 		{
-			result = treePtr;
+			result = &treePtr;
 			return 0;
 		}
 	}
