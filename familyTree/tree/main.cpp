@@ -26,6 +26,7 @@ Ann
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 const int DL = 20;          // максимальная длина
 
@@ -40,7 +41,8 @@ struct Tree
 	Tree *right;
 };
 
-int read_from_file(FILE *F, Tree **r);  // чтение из файла, формирование дерева
+int ReadTreeFromFile(FILE *F, Tree **r);  // чтение из файла, формирование дерева
+int FindTree(Tree *treePtr, Tree *result, char* name); // поиск листа дерева по имени
 void back_from_bin(Tree *p);            // выдача исходное дерева из бинарного 
 void print_down_bin(Tree *p, int lev);  // выдача бинарного сверху вниз
 void print_up_bin(Tree *p, int lev);    // выдача бинарного снизу вверх
@@ -51,9 +53,9 @@ int main(int argc, char* argv[])
 	Tree *root = 0;
 	FILE *Fin;
 	setlocale(LC_ALL, "rus");
-	if (argc != 2)
+	if (argc < 4)
 	{
-		printf("\nNumber parameters is wrong");
+		printf("\nProgram input data error!\nUsage: familyTree.exe <filename> <name1> <name2>\n");
 		getchar();
 		return -1;
 	}
@@ -64,24 +66,25 @@ int main(int argc, char* argv[])
 		getchar();
 		return -1;
 	}
-	read_from_file(Fin, &root);
+	ReadTreeFromFile(Fin, &root);
 	printf("Binary tree setup completed!\n");
-	getchar();
-	printf("Binary tree output\n");
-	back_from_bin(root);
-	getchar();
-	printf("Binary tree top to down output\n");
-	print_down_bin(root, 0);
-	getchar();
-	printf("Binary tree down to up output\n");
-	print_up_bin(root, 0);
-	getchar();
-	printf("Binary tree right to left output\n");
-	print_right_bin(root, 0);
-	getchar();
+	//getchar();
+	char* nameOfFirst = argv[2];
+	char* nameOfSecond = argv[3];
+
+	Tree *first = 0, *second = 0;
+	if (FindTree(root, first, nameOfFirst) != 0 )
+	{
+		printf("Human with name %s not found in the tree\n", nameOfFirst);
+	}
+	if (FindTree(root, second, nameOfSecond) != 0)
+	{
+		printf("Human with name %s not found in the tree\n", nameOfSecond);
+	}
+	//getchar();
 }
 
-int read_from_file(FILE *F, Tree **r)
+int ReadTreeFromFile(FILE *F, Tree **r)
 {
 	char buf[DL];
 	int i, k, m, len;
@@ -132,6 +135,22 @@ int read_from_file(FILE *F, Tree **r)
 	return 0;
 }
 
+int FindTree(Tree *treePtr, Tree *result, char* name)
+{
+	int find = 1;
+	if (treePtr != 0)
+	{
+		find *= FindTree(treePtr->right, result, name);
+		find *= FindTree(treePtr->left, result, name);
+		if (strcmp(name, treePtr->name) == 0)
+		{
+			result = treePtr;
+			return 0;
+		}
+	}
+	return find;
+}
+
 void back_from_bin(Tree *p)
 {
 	int i, j;
@@ -144,41 +163,5 @@ void back_from_bin(Tree *p)
 		printf("%s\n", st);
 		back_from_bin(p->left);
 		back_from_bin(p->right);
-	}
-}
-
-void print_right_bin(Tree *p, int level)
-{
-	if (p)
-	{
-		print_right_bin(p->left, level + 1);
-		for (int i = 0; i < level; i++)
-			printf("%c", '.');
-		printf("%s\n", p->name);
-		print_right_bin(p->right, level + 1);
-	}
-}
-
-void print_up_bin(Tree *p, int level)
-{
-	if (p)
-	{
-		print_up_bin(p->left, level + 1);
-		print_up_bin(p->right, level + 1);
-		for (int i = 0; i < level; i++)
-			printf("%c", '.');
-		printf("%s\n", p->name);
-	}
-}
-
-void print_down_bin(Tree *p, int level)
-{
-	if (p)
-	{
-		for (int i = 0; i < level; i++)
-			printf("%c", '.');
-		printf("%s\n", p->name);
-		print_down_bin(p->left, level + 1);
-		print_down_bin(p->right, level + 1);
 	}
 }
