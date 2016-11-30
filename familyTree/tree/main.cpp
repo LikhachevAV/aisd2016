@@ -42,8 +42,9 @@ struct Tree
 };
 
 int ReadTreeFromFile(FILE *F, Tree **r);  // чтение из файла, формирование дерева
-Tree * FindTree(Tree *treePtr, char* name); // поиск листа дерева по имени
-void back_from_bin(Tree *p);            // выдача исходное дерева из 
+Tree *FindTree(Tree *treePtr, char* name); // поиск листа дерева по имени
+int IsParent(Tree *parent, Tree *child); // возвращает 0, если parent - предок child
+Tree *FindParent(Tree *first, Tree *second);
 
 int main(int argc, char* argv[])
 {
@@ -64,8 +65,6 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	ReadTreeFromFile(Fin, &root);
-	printf("Binary tree setup completed!\n");
-	//getchar();
 	char* nameOfFirst = argv[2];
 	char* nameOfSecond = argv[3];
 
@@ -80,7 +79,40 @@ int main(int argc, char* argv[])
 	{
 		printf("Human with name %s not found in the tree\n", nameOfSecond);
 	}
-	//getchar();
+
+	if (first == second)
+	{
+		printf("Just one name entered: %s\n", first->name);
+		return 1;
+	}
+
+	if (first && second == 0)
+	{
+		return 1;
+	}
+
+	if (IsParent(first, second) == 0)
+	{
+		printf("%s is parent of %s\n", first->name, second->name);
+	} else
+	if (IsParent(second, first) == 0)
+	{
+		printf("%s is parent of %s\n", second->name, first->name);
+	}
+	else
+	{
+		Tree *parent = FindParent(first, second);
+		if (parent != 0)
+		{
+			printf("%s is parent of %s and %s\n", parent->name, first->name, second->name);
+		}
+		else
+		{
+			printf("%s and %s haven't common parents\n", first->name, second->name);
+			return 1;
+		}
+	}
+	return 0;
 }
 
 int ReadTreeFromFile(FILE *F, Tree **r)
@@ -150,17 +182,46 @@ Tree  *FindTree(Tree *treePtr, char* name)
 	return result;
 }
 
-void back_from_bin(Tree *p)
+int IsParent(Tree *parent, Tree *child)
 {
-	int i, j;
-	char st[DL];
-	if (p)
+	if (parent->urov >= child->urov)
 	{
-		for (i = 0; i < p->urov; i++) st[i] = '.';
-		j = 0;
-		while (st[i++] = (p->name)[j++]);
-		printf("%s\n", st);
-		back_from_bin(p->left);
-		back_from_bin(p->right);
+		return 1;
 	}
+
+	Tree *tmp = child;
+	while (tmp->urov > parent->urov)
+	{
+		tmp = tmp->fath;
+	}
+	if (tmp == parent)
+		return 0;
+	return 1;
+}
+
+Tree *FindParent(Tree *first, Tree *second)
+{
+	Tree *tmp1 = first;
+	Tree *tmp2 = second;
+	if (tmp1->urov != tmp2->urov)
+	{
+		while (tmp1->urov > tmp2->urov)
+		{
+			tmp1 = tmp1->fath;
+		}
+		while (tmp2->urov > tmp1->urov)
+		{
+			tmp2 = tmp2->fath;
+		}
+	}
+	while ((tmp1 != tmp2) && (tmp1 != 0))
+	{
+		tmp1 = tmp1->fath;
+		tmp2 = tmp2->fath;
+	}
+	if (tmp1 == tmp2)
+	{
+		return tmp1;
+	}
+	else return 0;
 }
