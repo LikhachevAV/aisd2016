@@ -1,12 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 int const MAX_SIZE = 100;
 
-bool readFileToTable(const string & filename, vector<string> cities, int valuesTable[], string & error)
+bool readFileToTable(const string & filename, vector<string> & cities, vector<vector<int>> & distanceBetweenCities, string & error)
 {
 	ifstream inFile(filename);
 	if (!inFile.is_open())
@@ -16,28 +17,40 @@ bool readFileToTable(const string & filename, vector<string> cities, int valuesT
 			.append("open error!\n");
 		return false;
 	}
-	char ch = ' ';
-	int i = 0;
-	int j = 0;
-	string s;
-	while (ch != '\n')
+	string citiesStr;
+	if (!getline(inFile, citiesStr))
 	{
-		ch = ' ';
-		while ((ch != ';') && (ch != '\n'))
+		error.append("Cities from file ")
+			.append(filename)
+			.append(" reading error!");
+		return false;
+	}
+
+	auto itBegin = citiesStr.begin();
+	while (itBegin != citiesStr.end())
+	{
+		string s;
+		while ((itBegin != citiesStr.end() && (*itBegin != ';')))
 		{
-			inFile.get(ch);
-			if (ch != ' ' && ch != ';' && ch != '\n')
-			{
-				s.push_back(ch);
-			}
+			s.push_back(*itBegin);
+			++itBegin;
 		}
-		if (s != "")
+		if (s.length() != 0)
 		{
 			cities.push_back(s);
 		}
-		s = "";
+		if ((itBegin != citiesStr.end() && (*(itBegin + 1) == ' ')))
+		{
+			++itBegin;
+		}
 	}
-	
+	if (cities.size() < 2)
+	{
+		error
+			.append("Cities min count must be 2, but found ")
+			.append(to_string(cities.size()));
+		return false;
+	}
 	return true;
 }
 
@@ -51,9 +64,13 @@ bool main(int argc, char* argv[])
 	}
 
 	vector<string> cities;
-	int size = cities.size();
-	int valuesTable[MAX_SIZE][MAX_SIZE];
+	vector<vector<int>> distanceBetweenCities;
 	string error;
-	readFileToTable(argv[1], cities, *valuesTable, error);
+	if (!readFileToTable(argv[1], cities, distanceBetweenCities, error))
+	{
+		cout << error << endl;
+		return false;
+	}
+	cout << endl;
 	return true;
 }
