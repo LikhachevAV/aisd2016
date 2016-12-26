@@ -36,12 +36,11 @@ using namespace std;
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(InitDistancesVector_function)
-		BOOST_AUTO_TEST_CASE(can_initialize_vector_with_size_2X2)
+		BOOST_AUTO_TEST_CASE(dont_change_empty_vector)
 		{
 			vector<vector<int>> v1;
-			InitDistancesVector(v1, 2);
-			vector<vector<int>> expectedVector = { {0, INT_MAX},
-													{INT_MAX, 0} };
+			InitDistancesVector(v1, 0);
+			vector<vector<int>> expectedVector;
 			BOOST_CHECK(equal(v1.begin(), v1.end(), expectedVector.begin()));
 		}
 
