@@ -2,3 +2,5 @@
 #include "stdafx.h"
 
 bool ReadCities(std::string & inStr, std::vector<std::string> & cities);
+
+void InitDistancesVector(std::vector<std::vector<int>> & distancesTable, size_t size);

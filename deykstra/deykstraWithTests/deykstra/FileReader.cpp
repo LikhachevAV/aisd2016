@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "FileReader.h"
+#include <climits>
 
 bool ReadCities(std::string & inStr, std::vector<std::string> & cities)
 {
@@ -23,4 +24,20 @@ bool ReadCities(std::string & inStr, std::vector<std::string> & cities)
 		}
 	}
 	return true;
+}
+
+void InitDistancesVector(std::vector<std::vector<int>> & distancesTable, size_t size)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		std::vector<int> v(size, INT_MAX);
+		distancesTable.push_back(v);
+	}
+	auto initDiagonal = [&]() {
+		for (size_t i = 0; i < size; ++i)
+		{
+			distancesTable[i][i] = 0;
+		}
+	};
+	initDiagonal();
 }
