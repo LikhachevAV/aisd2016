@@ -19,7 +19,17 @@ using namespace std;
 			string s = "New York";
 			vector<string> cities;
 			BOOST_CHECK(ReadCities(s, cities));
-			cout << cities[0] << endl;
 			BOOST_CHECK_EQUAL(s, cities[0]);
+		}
+
+		BOOST_AUTO_TEST_CASE(return_true_when_have_three_cities)
+		{
+			string s = "New York; Yorksir; Yoshkar-Ola";
+			vector<string> cities;
+			BOOST_CHECK(ReadCities(s, cities));
+			vector<string> expectedCities = {"New York", "Yorksir", "Yoshkar-Ola"};
+			auto comparer = [&](string s1, string s2) {return s1 == s2;};
+			
+			BOOST_CHECK(equal(cities.begin(), cities.end(), expectedCities.begin()));
 		}
 	BOOST_AUTO_TEST_SUITE_END()
