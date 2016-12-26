@@ -44,14 +44,14 @@ using namespace std;
 			BOOST_CHECK(equal(v1.begin(), v1.end(), expectedVector.begin()));
 		}
 
-	BOOST_AUTO_TEST_CASE(can_initialize_vector_with_size_3X3)
-	{
-		vector<vector<int>> v1;
-		InitDistancesVector(v1, 3);
-		vector<vector<int>> expectedVector = { { 0, INT_MAX, INT_MAX},
-												{INT_MAX, 0, INT_MAX },
-												{INT_MAX, INT_MAX, 0}};
-		BOOST_CHECK(equal(v1.begin(), v1.end(), expectedVector.begin()));
-	}
+		BOOST_AUTO_TEST_CASE(can_initialize_vector_with_size_3X3)
+		{
+			vector<vector<int>> v1;
+			InitDistancesVector(v1, 3);
+			vector<vector<int>> expectedVector = { { 0, INT_MAX, INT_MAX},
+													{INT_MAX, 0, INT_MAX },
+													{INT_MAX, INT_MAX, 0}};
+			BOOST_CHECK(equal(v1.begin(), v1.end(), expectedVector.begin()));
+		}
 
 	BOOST_AUTO_TEST_SUITE_END()

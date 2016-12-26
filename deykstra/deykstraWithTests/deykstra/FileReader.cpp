@@ -32,12 +32,14 @@ void InitDistancesVector(std::vector<std::vector<int>> & distancesTable, size_t 
 	{
 		std::vector<int> v(size, INT_MAX);
 		distancesTable.push_back(v);
+		distancesTable[i][i] = 0;
 	}
-	auto initDiagonal = [&]() {
+	/*auto initDiagonal = [&]() {
 		for (size_t i = 0; i < size; ++i)
 		{
 			distancesTable[i][i] = 0;
 		}
 	};
 	initDiagonal();
+	*/
 }
