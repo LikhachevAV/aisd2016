@@ -10,9 +10,7 @@ bool ReadCities(std::string & inStr, std::vector<std::string> & cities)
 		return false;
 	}
 
-	//for (auto it = inStr.begin(); it != inStr.end(); ++it)
-	auto it = inStr.begin();
-	while(it != inStr.end())
+	for (auto it = inStr.begin(); it != inStr.end(); ++it)
 	{
 		if ((city.length() != 0 || *it != ' ') && (*it != ';'))
 		{
@@ -23,7 +21,6 @@ bool ReadCities(std::string & inStr, std::vector<std::string> & cities)
 			cities.push_back(city);
 			city = "";
 		}
-		++it;
 	}
 	return true;
 }
