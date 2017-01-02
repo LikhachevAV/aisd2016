@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FileReader.h"
-#include <climits>
+#include <algorithm>
+
 
 bool ReadCities(std::string & inStr, std::vector<std::string> & cities)
 {
@@ -34,12 +35,16 @@ void InitDistancesVector(std::vector<std::vector<int>> & distancesTable, size_t 
 		distancesTable.push_back(v);
 		distancesTable[i][i] = 0;
 	}
-	/*auto initDiagonal = [&]() {
-		for (size_t i = 0; i < size; ++i)
+}
+
+int GetCityIndex(const std::vector<std::string>& cities, const std::string & city)
+{
+	for (int i = 0; i < cities.size(); ++i)
+	{
+		if (cities[i].compare(city) == 0)
 		{
-			distancesTable[i][i] = 0;
+			return i;
 		}
-	};
-	initDiagonal();
-	*/
+	}
+	return -1;
 }
