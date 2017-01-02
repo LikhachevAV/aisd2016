@@ -65,8 +65,8 @@ BOOST_AUTO_TEST_SUITE(GetCityIndex_function)
 
 BOOST_AUTO_TEST_CASE(return_city_index_when_it_is)
 {
-	vector<string> cities = { "One", "Two", "Three" };
-	int index = GetCityIndex(cities, "Two");
+	vector<string> cities = { "One", "Two Two", "Three" };
+	int index = GetCityIndex(cities, "Two Two");
 	BOOST_CHECK_EQUAL(index, 1);
 }
 BOOST_AUTO_TEST_SUITE_END()
