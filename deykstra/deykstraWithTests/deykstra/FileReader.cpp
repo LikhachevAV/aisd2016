@@ -58,11 +58,15 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 
 	auto getWord = [&](const char delimeter) {
 		std::string city;
-		for (; it < itEnd && *it == ' '; ++it) {} // пропускаем пробелы в начале слова.
+		while (it < itEnd && *it == ' ')
+		{
+			++it;
+		}
 
-		for (; it < itEnd && *it != delimeter; ++it)
+		while (it < itEnd && *it != delimeter)
 		{
 			city.push_back(*it);	
+			++it;
 		}
 		return city;
 	};
@@ -102,7 +106,7 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		return distance;
 	};
 
-	for (; it < itEnd; ++it)
+	while (it < itEnd)
 	{
 		std::string cityB = getWord(':');
 		int j = GetCityIndex(cities, cityB);
@@ -119,6 +123,10 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 			return false;
 		}
 		distancesTable[i][j] = val;
+		if (it < itEnd)
+		{
+			++it;
+		}
 	}
 	return true;
 }
