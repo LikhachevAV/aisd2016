@@ -57,18 +57,14 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 	int i = -1;
 
 	auto getWord = [&](const char delimeter) {
-		std::string city;
-		while (it < itEnd && *it == ' ')
-		{
-			++it;
-		}
+		std::string word;
+		for (; it < itEnd && *it == ' '; ++it){}
 
-		while (it < itEnd && *it != delimeter)
+		for (; it < itEnd && *it != delimeter; ++it)
 		{
-			city.push_back(*it);	
-			++it;
+			word.push_back(*it);
 		}
-		return city;
+		return word;
 	};
 
 	std::string cityA = getWord('#');
