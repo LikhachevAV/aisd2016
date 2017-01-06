@@ -123,10 +123,6 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 			return false;
 		}
 		distancesTable[i][j] = val;
-		if (it < itEnd)
-		{
-			++it;
-		}
 	}
 	return true;
 }
