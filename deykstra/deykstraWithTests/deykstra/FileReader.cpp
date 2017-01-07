@@ -8,7 +8,6 @@ bool ReadCityNames(std::string & inStr, std::vector<std::string> & cities)
 	std::string city;
 	if (inStr.length() == 0)
 	{
-		std::cout << "Error! Empty cities string!" << std::endl;
 		return false;
 	}
 

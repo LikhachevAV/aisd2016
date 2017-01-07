@@ -17,16 +17,21 @@ bool main(int argc, char* argv[])
 	ifstream f(fileName);
 	if (!f.is_open())
 	{
-		cout << "File with name " << fileName << " open error!" << endl;
+		cout << "File with name " << '"' << fileName << '"' << " open error!" << endl;
 		return false;
 	}
 
-	string citesStr;
-	if (!getline(f, citesStr) || citesStr.length() == 0)
+	string cityNamesStr;
+	if (!getline(f, cityNamesStr) || cityNamesStr.length() == 0)
 	{
-		cout << "Cities reading error from file " << fileName << endl;
+		cout << "Cities reading error from file " << '"' << fileName << '"' << endl;
 		return false;
 	};
-	
+
+	vector<string> cityNames;
+	if (!ReadCityNames(cityNamesStr, cityNames) || cityNames.size() == 0)
+	{
+		cout << "City names reading error from string " << '"' << cityNamesStr << '"' << endl;
+	};
 	return true;
 }
