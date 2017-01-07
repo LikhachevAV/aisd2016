@@ -102,8 +102,6 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		int distance = getDistance();
 		if (distance == -1)
 		{
-			std::cout << "Distance between cities " << cityA << "and  " << cityB 
-				<< " reading error!" << std::endl;
 			return false;
 		}
 		distancesTable[i][j] = distance;
