@@ -72,12 +72,16 @@ BOOST_AUTO_TEST_SUITE(GetCityIndex_function)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(AddCityDistancesToTable_function)
-	BOOST_AUTO_TEST_CASE(add_cities_distances_to_table)
+	BOOST_AUTO_TEST_CASE(can_add_cities_distances_to_table)
 	{
 		vector<string> cities = {"New York", "Yorksir", "Yoshkar-Ola"};
 		string distancesStr = "Yorksir# New York: 2; Yoshkar-Ola: 10";
 		vector<vector<int>> distancesTable;
 		InitDistancesTable(distancesTable, 3);
+		vector<vector<int>> expectedVector = {	{ 0, INT_MAX, INT_MAX },
+												{ 2, 0, 10 },
+												{ INT_MAX, INT_MAX, 0 } };
 		BOOST_CHECK(AddCityDistancesToTable(distancesTable, distancesStr, cities));
+		BOOST_CHECK(equal(distancesTable.begin(), distancesTable.end(), expectedVector.begin()));
 	}
 BOOST_AUTO_TEST_SUITE_END()
