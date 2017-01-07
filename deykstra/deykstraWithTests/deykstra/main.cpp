@@ -57,5 +57,6 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
 		}
 	}
+	cout << "Be happy, dont worry!" << endl;	//TODO: delete this finally!
 	return EXIT_SUCCESS;
 }
