@@ -72,15 +72,6 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		return word;
 	};
 
-	std::string cityA = getWord('#');
-	i = GetCityIndex(cities, cityA);
-
-	if (i == -1)
-	{
-		std::cout << "Source city name reading error!" << std::endl;
-		return false;
-	}
-	
 	auto getDistance = [&]() {
 		std::string distStr = getWord(';');
 		int distance = stoi(distStr);
@@ -90,6 +81,15 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		}
 		return distance;
 	};
+
+	std::string cityA = getWord('#');
+	i = GetCityIndex(cities, cityA);
+
+	if (i == -1)
+	{
+		std::cout << "Source city name reading error!" << std::endl;
+		return false;
+	}
 
 	while (it < itEnd)
 	{
