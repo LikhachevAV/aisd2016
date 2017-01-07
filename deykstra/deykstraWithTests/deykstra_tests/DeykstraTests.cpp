@@ -78,7 +78,6 @@ BOOST_AUTO_TEST_SUITE(AddCityDistancesToTable_function)
 		string distancesStr = "Yorksir# New York: 2; Yoshkar-Ola: 10";
 		vector<vector<int>> distancesTable;
 		InitDistancesTable(distancesTable, 3);
-		AddCityDistancesToTable(distancesTable, distancesStr, cities);
-//		BOOST_CHECK(AddCityDistancesToTable(distancesTable, distancesStr, cities));
+		BOOST_CHECK(AddCityDistancesToTable(distancesTable, distancesStr, cities));
 	}
 BOOST_AUTO_TEST_SUITE_END()

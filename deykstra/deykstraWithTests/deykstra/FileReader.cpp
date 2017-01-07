@@ -58,11 +58,16 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 
 	auto getWord = [&](const char delimeter) {
 		std::string word;
-		for (; it < itEnd && *it == ' '; ++it){}
+		for (;*it == ' '; ++it){}
 
 		for (; it < itEnd && *it != delimeter; ++it)
 		{
 			word.push_back(*it);
+		}
+
+		if (it < itEnd && *it == delimeter)
+		{
+			++it;
 		}
 		return word;
 	};
@@ -75,24 +80,8 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		std::cout << "Source city name reading error!" << std::endl;
 		return false;
 	}
-	if (it < itEnd && *it == '#')
-	{
-		++it;
-	}
-	else
-	{
-		std::cout << "Distances between cities reading error" << std::endl;
-	}
 	
 	auto getDistance = [&]() {
-		if (it < itEnd && *it == ':')
-		{
-			++it;
-		}
-		else
-		{
-			std::cout << "Distance value between cities reading error!" << std::endl;
-		}
 		std::string distStr = getWord(';');
 		int distance = stoi(distStr);
 		if (!distance)
