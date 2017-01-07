@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
 	{
 		cout << "City names reading error from string " << '"' << cityNamesStr << '"' << endl;
 	};
+	size_t citiesCount = cityNames.size();
 
 	vector<vector<int>> citiesDistances;
-	InitDistancesTable(citiesDistances, cityNames.size());
+	InitDistancesTable(citiesDistances, citiesCount);
 
 	while (!f.eof())
 	{
@@ -57,6 +58,20 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
 		}
 	}
-	cout << "Be happy, dont worry!" << endl;	//TODO: delete this finally!
+	cout << "Entered graph have the following cities:" << endl
+		<< "Index" << '\t' << "City name" << endl;
+	for (size_t i = 0; i < citiesCount; ++i)
+	{
+		cout << i << '\t' << cityNames[i] << endl;
+	}
+	cout << "Please, enter source city index (0 to " << citiesCount - 1 << "): ";
+	size_t sourceCityIndex = 0;
+	if (!(cin >> sourceCityIndex) || sourceCityIndex > citiesCount - 1)
+	{
+		cout << "Error! Source city index must be between 0 and " << citiesCount - 1
+			<< '!' << endl;
+		return EXIT_FAILURE;
+	}
+	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
 }
