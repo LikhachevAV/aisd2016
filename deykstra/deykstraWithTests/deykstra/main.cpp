@@ -4,6 +4,13 @@
 
 using namespace std;
 
+struct Vertex {
+	size_t distance = INT_MAX;
+	size_t prevCityIndex = INT_MAX;
+	size_t lastMustVizitedCityIndex = INT_MAX;
+	bool isFinalDistance = false;
+};
+
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
@@ -43,7 +50,7 @@ int main(int argc, char* argv[])
 		string distancesStr;
 		if (!getline(f, distancesStr) && !f.eof())
 		{
-			cout << "Distances between cities reading error from file " 
+			cout << "Distances between cities reading error from file "
 				<< '"' << fileName << '"' << " line must be not empty!" << endl;
 			return EXIT_FAILURE;
 		};
@@ -72,6 +79,35 @@ int main(int argc, char* argv[])
 			<< '!' << endl;
 		return EXIT_FAILURE;
 	}
+
+	// инициализация вектора с вершинами
+	auto getInitedVertexVector = [&](size_t count) {
+		vector<Vertex> vertexes(count);
+		for (size_t i = 0; i < count; ++i)
+		{
+			vertexes[i].prevCityIndex = i;
+		}
+		return vertexes;
+	};
+
+	vector<Vertex> vertexes = getInitedVertexVector(citiesCount);
+	auto setVertexesLastSourceCityIndex = [&]() {
+		for (size_t j = 0; j < citiesCount; ++j)
+		{
+			for (int i = (int)citiesCount - 1; i >= 0; --i)
+			{
+				if (citiesDistances[i][j] > 0 && citiesDistances[i][j] != INT_MAX)
+				{
+					vertexes[j].lastMustVizitedCityIndex = i;
+					break;
+				}
+			}
+		}
+	};
+
+	setVertexesLastSourceCityIndex();
+
+	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
 }
