@@ -93,6 +93,7 @@ int main(int argc, char* argv[])
 	vector<Vertex> vertexes = getInitedVertexVector(citiesCount);
 
 	auto initSourceVertex = [&]() {
+		vertexes[sourceCityIndex].distance = 0;
 		vertexes[sourceCityIndex].lastMustVizitedCityIndex = sourceCityIndex;
 		vertexes[sourceCityIndex].isFinalDistance = true;
 	};
