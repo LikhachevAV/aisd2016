@@ -91,12 +91,19 @@ int main(int argc, char* argv[])
 	};
 
 	vector<Vertex> vertexes = getInitedVertexVector(citiesCount);
+
+	auto initSourceVertex = [&]() {
+		vertexes[sourceCityIndex].lastMustVizitedCityIndex = sourceCityIndex;
+		vertexes[sourceCityIndex].isFinalDistance = true;
+	};
+	initSourceVertex();
+
 	auto setVertexesLastSourceCityIndex = [&]() {
 		for (size_t j = 0; j < citiesCount; ++j)
 		{
 			for (int i = (int)citiesCount - 1; i >= 0; --i)
 			{
-				if (citiesDistances[i][j] > 0 && citiesDistances[i][j] != INT_MAX)
+				if (sourceCityIndex != j && citiesDistances[i][j] > 0 && citiesDistances[i][j] != INT_MAX)
 				{
 					vertexes[j].lastMustVizitedCityIndex = i;
 					break;
