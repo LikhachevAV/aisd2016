@@ -118,14 +118,14 @@ int main(int argc, char* argv[])
 	auto getMinDistancesFromSourceCity = [&](size_t i, size_t j) {
 		for (; j < citiesCount; ++j)
 		{
-			if (!vertexes[i].isFinalDistance && vertexes[i].distance > citiesDistances[i][j] && citiesDistances[i][j] != 0)
+			if (!vertexes[j].isFinalDistance && vertexes[j].distance > citiesDistances[i][j] && citiesDistances[i][j] != 0)
 			{
-				vertexes[i].distance = citiesDistances[i][j];
-				vertexes[i].prevCityIndex = i;
+				vertexes[j].distance = citiesDistances[i][j] + vertexes[vertexes[j].prevCityIndex].distance;
+				vertexes[j].prevCityIndex = i;
 			}
-			if (vertexes[i].lastMustVizitedCityIndex == i)
+			if (vertexes[j].lastMustVizitedCityIndex == i)
 			{
-				vertexes[i].isFinalDistance = true;
+				vertexes[j].isFinalDistance = true;
 			}
 		}
 	};
