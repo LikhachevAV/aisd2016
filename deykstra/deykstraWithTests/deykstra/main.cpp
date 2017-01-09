@@ -115,7 +115,29 @@ int main(int argc, char* argv[])
 
 	setVertexesLastSourceCityIndex();
 
+	auto getMinDistancesFromSourceCity = [&] (size_t i, size_t j) {
+		for (; j < citiesCount; ++j)
+		{
+			if (!vertexes[j].isFinalDistance && vertexes[j].distance > citiesDistances[i][j] && citiesDistances[i][j] != 0)
+			{
+				vertexes[j].distance = citiesDistances[i][j];
+				vertexes[j].prevCityIndex = i;
+			}
+			if (vertexes[j].lastMustVizitedCityIndex == i)
+			{
+				vertexes[j].isFinalDistance = true;
+			}
+		}
+	};
+
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
+	for (size_t i = 0; i < citiesCount; ++i)
+	{
+		for (size_t j = 0; j < citiesCount; ++j)
+		{
+			getMinDistancesFromSourceCity(i, j);
+		}
+	}
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
 }
