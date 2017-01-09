@@ -114,8 +114,38 @@ int main(int argc, char* argv[])
 	};
 
 	setVertexesLastSourceCityIndex();
+	
+	auto getMinDistancesFromSourceCity = [&](size_t i, size_t j) {
+		for (; j < citiesCount; ++j)
+		{
+			if (!vertexes[i].isFinalDistance && vertexes[i].distance > citiesDistances[i][j] && citiesDistances[i][j] != 0)
+			{
+				vertexes[i].distance = citiesDistances[i][j];
+				vertexes[i].prevCityIndex = i;
+			}
+			if (vertexes[i].lastMustVizitedCityIndex == i)
+			{
+				vertexes[i].isFinalDistance = true;
+			}
+		}
+	};
 
-	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
+	for (size_t j = 0; j < citiesCount; ++j) // Заполняем прямые пути из вершины-источника до других вершин
+	{
+		getMinDistancesFromSourceCity(sourceCityIndex, j);
+	}
+
+	for (size_t i = 0; i < citiesCount; ++i)
+	{
+		if (i != sourceCityIndex)
+		{
+			for (size_t j = 0; j < citiesCount; ++j)
+			{
+				getMinDistancesFromSourceCity(i, j);
+			}
+		}
+	}
+
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
 }
