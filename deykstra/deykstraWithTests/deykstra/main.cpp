@@ -115,12 +115,14 @@ int main(int argc, char* argv[])
 
 	setVertexesLastSourceCityIndex();
 	
-	auto getMinDistancesFromSourceCity = [&](size_t i, size_t j) {
+	auto setMinDistancesFromSourceCity = [&](size_t i, size_t j) {
 		for (; j < citiesCount; ++j)
 		{
-			if (!vertexes[j].isFinalDistance && vertexes[j].distance > citiesDistances[i][j] && citiesDistances[i][j] != 0)
+			if (!vertexes[j].isFinalDistance && 
+				vertexes[j].distance > citiesDistances[i][j] &&
+				citiesDistances[i][j] != 0)
 			{
-				vertexes[j].distance = citiesDistances[i][j] + vertexes[vertexes[j].prevCityIndex].distance;
+				vertexes[j].distance = citiesDistances[i][j];
 				vertexes[j].prevCityIndex = i;
 			}
 			if (vertexes[j].lastMustVizitedCityIndex == i)
@@ -132,7 +134,7 @@ int main(int argc, char* argv[])
 
 	for (size_t j = 0; j < citiesCount; ++j) // Заполняем прямые пути из вершины-источника до других вершин
 	{
-		getMinDistancesFromSourceCity(sourceCityIndex, j);
+		setMinDistancesFromSourceCity(sourceCityIndex, j);
 	}
 
 	for (size_t i = 0; i < citiesCount; ++i)
@@ -141,7 +143,7 @@ int main(int argc, char* argv[])
 		{
 			for (size_t j = 0; j < citiesCount; ++j)
 			{
-				getMinDistancesFromSourceCity(i, j);
+				setMinDistancesFromSourceCity(i, j);
 			}
 		}
 	}
