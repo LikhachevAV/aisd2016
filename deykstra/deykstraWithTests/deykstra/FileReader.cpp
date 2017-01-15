@@ -3,9 +3,9 @@
 #include <algorithm>
 
 
-bool ReadCityNames(std::string & inStr, std::vector<std::string> & cities)
+bool ReadVertexNames(std::string & inStr, std::vector<std::string> & vertexNames)
 {
-	std::string city;
+	std::string name;
 	if (inStr.length() == 0)
 	{
 		return false;
@@ -13,30 +13,30 @@ bool ReadCityNames(std::string & inStr, std::vector<std::string> & cities)
 
 	for (auto it = inStr.begin(); it < inStr.end(); ++it)
 	{
-		if ((city.length() != 0 || *it != ' ') && (*it != ';'))
+		if ((name.length() != 0 || *it != ' ') && (*it != ';'))
 		{
-			city.push_back(*it);
+			name.push_back(*it);
 		}
 		if ((*it == ';') || (it == inStr.end() - 1))
 		{
-			cities.push_back(city);
-			city = "";
+			vertexNames.push_back(name);
+			name = "";
 		}
 	}
 	return true;
 }
 
-void InitDistancesTable(std::vector<std::vector<int>> & distancesTable, size_t size)
+void InitDistancesTable(std::vector<std::vector<size_t>> & distancesTable, size_t size)
 {
 	for (size_t i = 0; i < size; ++i)
 	{
-		std::vector<int> v(size, INT_MAX);
+		std::vector<size_t> v(size, SIZE_MAX);
 		distancesTable.push_back(v);
 		distancesTable[i][i] = 0;
 	}
 }
 
-int GetCityIndex(const std::vector<std::string>& cities, const std::string & city)
+int GetCityIndex(const std::vector<std::string>& cities, std::string & const city)
 {
 	for (int i = 0; i < cities.size(); ++i)
 	{
@@ -48,7 +48,7 @@ int GetCityIndex(const std::vector<std::string>& cities, const std::string & cit
 	return -1;
 }
 
-bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
+bool AddEdgeToTable(std::vector<std::vector<int>> & distancesTable,
 	const std::string & distancesStr, const std::vector<std::string> & cities)
 {
 	auto it = distancesStr.begin();
@@ -86,7 +86,7 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 
 	if (i == -1)
 	{
-		std::cout << "Source city name reading error!" << std::endl;
+		std::cout << "Source name name reading error!" << std::endl;
 		return false;
 	}
 
@@ -96,7 +96,7 @@ bool AddCityDistancesToTable(std::vector<std::vector<int>> & distancesTable,
 		int j = GetCityIndex(cities, cityB);
 		if (j == -1)
 		{
-			std::cout << "Destination city name reading error!" << std::endl;
+			std::cout << "Destination name name reading error!" << std::endl;
 			return false;
 		}
 		int distance = getDistance();

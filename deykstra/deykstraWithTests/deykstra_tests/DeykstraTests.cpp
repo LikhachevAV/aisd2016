@@ -12,14 +12,14 @@ BOOST_AUTO_TEST_SUITE(ReadCities_function)
 	{
 		string s;
 		vector<string> cities;
-		BOOST_CHECK(!ReadCityNames(s, cities));
+		BOOST_CHECK(!ReadVertexNames(s, cities));
 	}
 
 	BOOST_AUTO_TEST_CASE(return_true_when_have_just_one_city)
 	{
 		string s = "New York";
 		vector<string> cities;
-		BOOST_CHECK(ReadCityNames(s, cities));
+		BOOST_CHECK(ReadVertexNames(s, cities));
 		BOOST_CHECK_EQUAL(s, cities[0]);
 	}
 
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_SUITE(ReadCities_function)
 	{
 		string s = "New York; Yorksir; Yoshkar-Ola";
 		vector<string> cities;
-		BOOST_CHECK(ReadCityNames(s, cities));
+		BOOST_CHECK(ReadVertexNames(s, cities));
 		vector<string> expectedCities = {"New York", "Yorksir", "Yoshkar-Ola"};
 		auto comparer = [&](string s1, string s2) {return s1 == s2;};
 			
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_SUITE(AddCityDistancesToTable_function)
 		vector<vector<int>> expectedVector = {	{ 0, INT_MAX, INT_MAX },
 												{ 2, 0, 10 },
 												{ INT_MAX, INT_MAX, 0 } };
-		BOOST_CHECK(AddCityDistancesToTable(distancesTable, distancesStr, cities));
+		BOOST_CHECK(AddEdgeToTable(distancesTable, distancesStr, cities));
 		BOOST_CHECK(equal(distancesTable.begin(), distancesTable.end(), expectedVector.begin()));
 	}
 BOOST_AUTO_TEST_SUITE_END()
