@@ -13,5 +13,6 @@
 #include <vector>
 #include <climits>
 #include <fstream>
+#include <algorithm>
 
 // TODO: reference additional headers your program requires here

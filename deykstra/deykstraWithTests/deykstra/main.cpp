@@ -115,27 +115,24 @@ int main(int argc, char* argv[])
 
 	setVertexesLastSourceCityIndex();
 	
-	auto setMinDistancesFromSourceCity = [&](size_t i, size_t j) {
-		for (; j < citiesCount; ++j)
+	auto setDirectDistancesFromSourceCity = [&]() {
+		for (size_t j = 0; j < citiesCount; ++j)
 		{
 			if (!vertexes[j].isFinalDistance && 
-				vertexes[j].distance > citiesDistances[i][j] &&
-				citiesDistances[i][j] != 0)
+				vertexes[j].distance > citiesDistances[sourceCityIndex][j] &&
+				citiesDistances[sourceCityIndex][j] != 0)
 			{
-				vertexes[j].distance = citiesDistances[i][j];
-				vertexes[j].prevCityIndex = i;
+				vertexes[j].distance = citiesDistances[sourceCityIndex][j];
+				vertexes[j].prevCityIndex = sourceCityIndex;
 			}
-			if (vertexes[j].lastMustVizitedCityIndex == i)
+			if (vertexes[j].lastMustVizitedCityIndex == sourceCityIndex)
 			{
 				vertexes[j].isFinalDistance = true;
 			}
 		}
 	};
 
-	for (size_t j = 0; j < citiesCount; ++j) // Заполняем прямые пути из вершины-источника до других вершин
-	{
-		setMinDistancesFromSourceCity(sourceCityIndex, j);
-	}
+	setDirectDistancesFromSourceCity(); // Заполняем прямые пути из вершины-источника до других вершин
 
 	for (size_t i = 0; i < citiesCount; ++i)
 	{
@@ -143,7 +140,19 @@ int main(int argc, char* argv[])
 		{
 			for (size_t j = 0; j < citiesCount; ++j)
 			{
-				setMinDistancesFromSourceCity(i, j);
+				if (!vertexes[j].isFinalDistance &&
+					vertexes[j].distance > citiesDistances[i][j] + 
+					citiesDistances[i][vertexes[j].prevCityIndex] &&
+					citiesDistances[i][j] != 0)
+				{
+					vertexes[j].distance = citiesDistances[i][j] +
+						citiesDistances[i][vertexes[j].prevCityIndex];
+					vertexes[j].prevCityIndex = i;
+				}
+				if (vertexes[j].lastMustVizitedCityIndex == i)
+				{
+					vertexes[j].isFinalDistance = true;
+				}
 			}
 		}
 	}
