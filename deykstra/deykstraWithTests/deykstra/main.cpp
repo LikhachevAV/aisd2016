@@ -101,31 +101,27 @@ int main(int argc, char* argv[])
 	initSourceVertex();
 	// add printing vector with source Node vertex only!
 
-	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex) {
-		size_t minVal = SIZE_MAX;
+	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
+		size_t minDistanceVal = SIZE_MAX;
 		size_t index = SIZE_MAX;
 		for (size_t j = 0; j < vertexesCount; ++j)
 		{
-			if (edges[sourceNodeIndex][j] < minVal && edges[sourceNodeIndex][j] > 0)
+			if (edges[sourceNodeIndex][j] < minDistanceVal && edges[sourceNodeIndex][j] > 0)
 			{
-				minVal = edges[sourceNodeIndex][j];
+				minDistanceVal = edges[sourceNodeIndex][j];
 				index = j;
 			}
 		}
-		Node node;
-		node.index = index;
-		node.prevCityIndex = sourceNodeIndex;
-		node.distance = edges[sourceNodeIndex][index];
-		return node;
-	};
-	Node tmpNode = getMinSourceNodeIndex(sourceVertexIndex);
-	if (tmpNode.distance < SIZE_MAX)
-	{
-		nodes[tmpNode.index].prevCityIndex = tmpNode.prevCityIndex;
-		nodes[tmpNode.index].distance = tmpNode.distance;
-		nodes[tmpNode.index].isFinal = true;
-	}
-	
+		if (minDistanceVal < SIZE_MAX)
+		{
+			nodes[index].prevCityIndex = sourceNodeIndex;
+			nodes[index].distance = minDistanceVal;
+			nodes[index].prevCityIndex = sourceNodeIndex;
+			nodes[index].isFinal = true;
+		}
+	};	
+	getMinSourceNodeIndex(sourceVertexIndex, nodes);
+
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
