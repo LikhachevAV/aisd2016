@@ -8,7 +8,7 @@ struct Node {
 	string vertexName;
 	size_t index = 0;
 	size_t distance = SIZE_MAX;
-	size_t prevCityIndex = SIZE_MAX;
+	size_t prevVertexIndex = SIZE_MAX;
 	bool isFinal = false;
 };
 
@@ -95,10 +95,48 @@ int main(int argc, char* argv[])
 	vector<Node> nodes = getInitedNodesVector(vertexesCount);
 	auto initSourceVertex = [&]() {
 		nodes[sourceVertexIndex].distance = 0;
-		nodes[sourceVertexIndex].prevCityIndex = sourceVertexIndex;
+		nodes[sourceVertexIndex].prevVertexIndex = sourceVertexIndex;
 		nodes[sourceVertexIndex].isFinal = true;
 	};
 	initSourceVertex();
+	
+	auto printNode = [&]() {
+		for (size_t i = 0; i < vertexesCount; ++i)
+		{
+			cout << "vertex name:\t\t" << nodes[i].vertexName << endl
+				<< "vertex distance:\t";
+			if (nodes[i].distance < SIZE_MAX)
+			{
+				cout << nodes[i].distance << endl;
+			} 
+			else
+			{
+				cout << '-' << endl;
+			}
+			cout << "vertex is final:\t";
+			if (nodes[i].isFinal)
+			{
+				cout << "true" << endl;
+			} 
+			else
+			{
+				cout << "false" << endl;
+			}
+
+			cout << "prev vertex:\t\t";
+			if (nodes[i].prevVertexIndex < SIZE_MAX)
+			{
+				cout << nodes[nodes[i].prevVertexIndex].vertexName << endl;
+			}
+			else
+			{
+				cout << nodes[i].vertexName << endl;
+			}
+			cout << endl;
+ 		}
+		cout << "###########################" << endl;
+	};
+	printNode();
 	// add printing vector with source Node vertex only!
 
 	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
@@ -114,13 +152,14 @@ int main(int argc, char* argv[])
 		}
 		if (minDistanceVal < SIZE_MAX)
 		{
-			nodes[index].prevCityIndex = sourceNodeIndex;
+			nodes[index].prevVertexIndex = sourceNodeIndex;
 			nodes[index].distance = minDistanceVal;
-			nodes[index].prevCityIndex = sourceNodeIndex;
+			nodes[index].prevVertexIndex = sourceNodeIndex;
 			nodes[index].isFinal = true;
 		}
 	};	
 	getMinSourceNodeIndex(sourceVertexIndex, nodes);
+	// add printing vector with two Node vertex!
 
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
