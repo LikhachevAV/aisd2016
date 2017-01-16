@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 		cout << i << '\t' << vertexNames[i] << endl;
 	}
 	cout << "Please, enter source vertex index (0 to " << vertexesCount - 1 << "): ";
-	size_t sourceVertexIndex = 0;
+	size_t sourceVertexIndex = SIZE_MAX;
 	if (!(cin >> sourceVertexIndex) || sourceVertexIndex > vertexesCount - 1)
 	{
 		cout << "Error! Source vertex index must be between 0 and " << vertexesCount - 1
@@ -93,13 +93,10 @@ int main(int argc, char* argv[])
 		return nodes;
 	};
 
-	vector<Node> finalNodes;
 	vector<Node> nodes = getInitedNodesVector(vertexesCount);
 	auto initSourceVertex = [&]() {
 		nodes[sourceVertexIndex].distance = 0;
 		nodes[sourceVertexIndex].prevVertexIndex = sourceVertexIndex;
-		nodes[sourceVertexIndex].isFinal = true;
-		finalNodes.push_back(nodes[sourceVertexIndex]);
 	};
 	initSourceVertex();
 
@@ -147,34 +144,12 @@ int main(int argc, char* argv[])
 	};
 	printNodes();
 	
-	while (finalNodes.size() < vertexesCount)
+	bool tryAgain;
+	do
 	{
 		size_t minDistanceVal = SIZE_MAX;
 		size_t index = SIZE_MAX;
-		for (size_t i = 0; i < finalNodes.size(); ++i)
-		{
-			
-			for (size_t j = 0; j < vertexesCount; ++j)
-			{
-				if (edges[i][j] < SIZE_MAX &&
-					edges[i][j] > 0 &&
-					!nodes[j].isFinal &&
-					edges[i][j] + nodes[i].distance < minDistanceVal)
-				{
-					minDistanceVal = edges[i][j] + nodes[i].distance;
-					index = j;
-					nodes[index].prevVertexIndex = i;
-					nodes[index].distance = minDistanceVal;
-				}
-				if (minDistanceVal < SIZE_MAX && index < SIZE_MAX && !nodes[index].isFinal)
-				{
-					nodes[index].isFinal = true;
-					finalNodes.push_back(nodes[index]);
-				}
-			}
-			
 			printNodes();
-		}
-	}
+	} while (tryAgain);
 	return EXIT_SUCCESS;
 }
