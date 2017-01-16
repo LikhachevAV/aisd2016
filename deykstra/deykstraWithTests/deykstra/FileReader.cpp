@@ -3,7 +3,7 @@
 #include <algorithm>
 
 
-bool ReadVertexNames(std::string & inStr, std::vector<std::string> & vertexNames)
+bool ReadVertexNames(const std::string & inStr, std::vector<std::string> & vertexNames)
 {
 	std::string name;
 	if (inStr.length() == 0)
@@ -36,24 +36,23 @@ void InitDistancesTable(std::vector<std::vector<size_t>> & distancesTable, size_
 	}
 }
 
-int GetCityIndex(const std::vector<std::string>& cities, std::string & const city)
+size_t GetVertexIndex(std::vector<std::string>& vertexNames, std::string & vertexName)
 {
-	for (int i = 0; i < cities.size(); ++i)
+	for (size_t i(0); i < vertexNames.size(); ++i)
 	{
-		if (cities[i].compare(city) == 0)
+		if (vertexNames[i].compare(vertexName) == 0)
 		{
 			return i;
 		}
 	}
-	return -1;
+	return SIZE_MAX;
 }
 
-bool AddEdgeToTable(std::vector<std::vector<int>> & distancesTable,
-	const std::string & distancesStr, const std::vector<std::string> & cities)
+bool AddEdgeToTable(std::vector<std::vector<size_t>> & distancesTable,
+	std::string & distancesStr, std::vector<std::string> & vertexNames)
 {
 	auto it = distancesStr.begin();
 	auto itEnd = distancesStr.end();
-	int i = -1;
 
 	auto getWord = [&](const char delimeter) {
 		std::string word;
@@ -82,9 +81,10 @@ bool AddEdgeToTable(std::vector<std::vector<int>> & distancesTable,
 	};
 
 	std::string cityA = getWord('#');
-	i = GetCityIndex(cities, cityA);
+	size_t i = SIZE_MAX;
+	i = GetVertexIndex(vertexNames, cityA);
 
-	if (i == -1)
+	if (i == SIZE_MAX)
 	{
 		std::cout << "Source name name reading error!" << std::endl;
 		return false;
@@ -93,10 +93,10 @@ bool AddEdgeToTable(std::vector<std::vector<int>> & distancesTable,
 	while (it < itEnd)
 	{
 		std::string cityB = getWord(':');
-		int j = GetCityIndex(cities, cityB);
-		if (j == -1)
+		size_t j = GetVertexIndex(vertexNames, cityB);
+		if (j == SIZE_MAX)
 		{
-			std::cout << "Destination name name reading error!" << std::endl;
+			std::cout << "Destination vertex name name reading error!" << std::endl;
 			return false;
 		}
 		int distance = getDistance();

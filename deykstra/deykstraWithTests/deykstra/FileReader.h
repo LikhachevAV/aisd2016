@@ -1,8 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
-bool ReadVertexNames(std::string & inStr, std::vector<std::string> & cities);
-void InitDistancesTable(std::vector<std::vector<int>> & distancesTable, size_t size);
-int GetCityIndex(const std::vector<std::string> & cities, const std::string & city);
-bool AddEdgeToTable(std::vector<std::vector<int>> & distancesTable,
-	const std::string & distancesStr, const std::vector<std::string> & cities);
+bool ReadVertexNames(const std::string & inStr, std::vector<std::string> & vertexNames);
+void InitDistancesTable(std::vector<std::vector<size_t>> & distancesTable, size_t size);
+size_t GetVertexIndex(std::vector<std::string>& vertexNames, std::string & vertexName);
+bool AddEdgeToTable(std::vector<std::vector<size_t>> & distancesTable,
+	std::string & distancesStr, std::vector<std::string> & vertexNames);

@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	};
 	size_t vertexesCount = vertexNames.size();
 
-	vector<vector<int>> edges;
+	vector<vector<size_t>> edges;
 	InitDistancesTable(edges, vertexesCount);
 
 	while (!f.eof())
