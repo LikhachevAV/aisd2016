@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 		}
 	}
 	cout << "Entered graph have the following vertexes:" << endl
-		<< "Index" << '\t' << "vertex" << endl;
+		<< "Index" << '\t' << "vertex" << endl << endl;
 	for (size_t i = 0; i < vertexesCount; ++i)
 	{
 		cout << i << '\t' << vertexNames[i] << endl;
@@ -80,6 +80,7 @@ int main(int argc, char* argv[])
 			<< '!' << endl;
 		return EXIT_FAILURE;
 	}
+	cout << endl;
 
 	// инициализация вектора с вершинами
 	auto getInitedNodesVector = [&](size_t count) {
@@ -99,44 +100,50 @@ int main(int argc, char* argv[])
 		nodes[sourceVertexIndex].isFinal = true;
 	};
 	initSourceVertex();
+
+	auto printNodesHeader = [&]() {
+		cout << "vertex name\t" << "vertex distance\t\t" << "vertex is final\t\t" << "prev vertex" << endl;
+	};
+	printNodesHeader();
 	
-	auto printNode = [&]() {
+	auto printNodes = [&]() {
+		
 		for (size_t i = 0; i < vertexesCount; ++i)
 		{
-			cout << "vertex name:\t\t" << nodes[i].vertexName << endl
-				<< "vertex distance:\t";
+			cout << nodes[i].vertexName << "\t\t";
+
 			if (nodes[i].distance < SIZE_MAX)
 			{
-				cout << nodes[i].distance << endl;
+				cout << nodes[i].distance;
 			} 
 			else
 			{
-				cout << '-' << endl;
+				cout << '-';
 			}
-			cout << "vertex is final:\t";
+			cout << "\t\t\t";
 			if (nodes[i].isFinal)
 			{
-				cout << "true" << endl;
+				cout << "true";
 			} 
 			else
 			{
-				cout << "false" << endl;
+				cout << "false";
 			}
+			cout << "\t\t\t";
 
-			cout << "prev vertex:\t\t";
 			if (nodes[i].prevVertexIndex < SIZE_MAX)
 			{
-				cout << nodes[nodes[i].prevVertexIndex].vertexName << endl;
+				cout << nodes[nodes[i].prevVertexIndex].vertexName;
 			}
 			else
 			{
-				cout << nodes[i].vertexName << endl;
+				cout << nodes[i].vertexName;
 			}
 			cout << endl;
  		}
-		cout << "###########################" << endl;
+		cout << endl;
 	};
-	printNode();
+	printNodes();
 	// add printing vector with source Node vertex only!
 
 	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
@@ -159,7 +166,7 @@ int main(int argc, char* argv[])
 		}
 	};	
 	getMinSourceNodeIndex(sourceVertexIndex, nodes);
-	// add printing vector with two Node vertex!
+	printNodes();
 
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
