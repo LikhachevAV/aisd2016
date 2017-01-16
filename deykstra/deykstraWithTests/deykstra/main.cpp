@@ -177,32 +177,33 @@ int main(int argc, char* argv[])
 	{
 		size_t minDistanceVal = SIZE_MAX;
 		size_t index = SIZE_MAX;
-		for (size_t ind = 0; ind < finalNodes.size(); ++ind)
+		for (size_t i = 0; i < finalNodes.size(); ++i)
 		{
 			for (size_t j = 0; j < vertexesCount; ++j)
 			{
-				if (edges[ind][j] < SIZE_MAX &&
-					edges[ind][j] > 0 &&
+				if (edges[i][j] < SIZE_MAX &&
+					edges[i][j] > 0 &&
 					!nodes[j].isFinal &&
-					edges[ind][j] + nodes[ind].distance < minDistanceVal)
+					edges[i][j] + nodes[i].distance < minDistanceVal)
 				{
-					minDistanceVal = edges[ind][j] + nodes[ind].distance;
+					minDistanceVal = edges[i][j] + nodes[i].distance;
 					index = j;
 				}
+				if (minDistanceVal < SIZE_MAX && index < SIZE_MAX && !nodes[index].isFinal)
+				{
+					nodes[index].prevVertexIndex = i;
+					nodes[index].distance = minDistanceVal;
+					nodes[index].prevVertexIndex = i;
+					nodes[index].isFinal = true;
+					finalNodes.push_back(nodes[index]);
+				}
 			}
-			if (minDistanceVal < SIZE_MAX && index < SIZE_MAX && !nodes[index].isFinal)
-			{
-				nodes[index].prevVertexIndex = ind;
-				nodes[index].distance = minDistanceVal;
-				nodes[index].prevVertexIndex = ind;
-				nodes[index].isFinal = true;
-				finalNodes.push_back(nodes[index]);
-			}
+			
 			printNodes();
 		}
 	}
 	printNodes();
-	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
+	getchar();
 	return EXIT_SUCCESS;
 }
