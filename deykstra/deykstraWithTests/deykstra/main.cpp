@@ -5,9 +5,11 @@
 using namespace std;
 
 struct Node {
+	string vertexName;
+	size_t index = 0;
 	size_t distance = SIZE_MAX;
 	size_t prevCityIndex = SIZE_MAX;
-	bool isFinalDistance = false;
+	bool isFinal = false;
 };
 
 int main(int argc, char* argv[])
@@ -84,19 +86,46 @@ int main(int argc, char* argv[])
 		vector<Node> nodes(count);
 		for (size_t i = 0; i < count; ++i)
 		{
-			nodes[i].prevCityIndex = i;
+			nodes[i].index = i;
+			nodes[i].vertexName = vertexNames[i];
 		}
 		return nodes;
 	};
 
 	vector<Node> nodes = getInitedNodesVector(vertexesCount);
-
 	auto initSourceVertex = [&]() {
 		nodes[sourceVertexIndex].distance = 0;
-		nodes[sourceVertexIndex].isFinalDistance = true;
+		nodes[sourceVertexIndex].prevCityIndex = sourceVertexIndex;
+		nodes[sourceVertexIndex].isFinal = true;
 	};
 	initSourceVertex();
+	// add printing vector with source Node vertex only!
 
+	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex) {
+		size_t minVal = SIZE_MAX;
+		size_t index = SIZE_MAX;
+		for (size_t j = 0; j < vertexesCount; ++j)
+		{
+			if (edges[sourceNodeIndex][j] < minVal && edges[sourceNodeIndex][j] > 0)
+			{
+				minVal = edges[sourceNodeIndex][j];
+				index = j;
+			}
+		}
+		Node node;
+		node.index = index;
+		node.prevCityIndex = sourceNodeIndex;
+		node.distance = edges[sourceNodeIndex][index];
+		return node;
+	};
+	Node tmpNode = getMinSourceNodeIndex(sourceVertexIndex);
+	if (tmpNode.distance < SIZE_MAX)
+	{
+		nodes[tmpNode.index].prevCityIndex = tmpNode.prevCityIndex;
+		nodes[tmpNode.index].distance = tmpNode.distance;
+		nodes[tmpNode.index].isFinal = true;
+	}
+	
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
