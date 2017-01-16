@@ -8,8 +8,8 @@ struct Node {
 	string vertexName;
 	size_t index = 0;
 	size_t distance = SIZE_MAX;
-	size_t prevVertexIndex = SIZE_MAX;
-	bool isFinal = false;
+	size_t sourceIndex = SIZE_MAX;
+	bool isVisited = false;
 };
 
 int main(int argc, char* argv[])
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
 	vector<Node> nodes = getInitedNodesVector(vertexesCount);
 	auto initSourceVertex = [&]() {
 		nodes[sourceVertexIndex].distance = 0;
-		nodes[sourceVertexIndex].prevVertexIndex = sourceVertexIndex;
+		nodes[sourceVertexIndex].sourceIndex = sourceVertexIndex;
 	};
 	initSourceVertex();
 
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 				cout << '-';
 			}
 			cout << "\t\t\t";
-			if (nodes[i].isFinal)
+			if (nodes[i].isVisited)
 			{
 				cout << "true";
 			} 
@@ -130,9 +130,9 @@ int main(int argc, char* argv[])
 			}
 			cout << "\t\t\t";
 
-			if (nodes[i].prevVertexIndex < SIZE_MAX)
+			if (nodes[i].sourceIndex < SIZE_MAX)
 			{
-				cout << nodes[nodes[i].prevVertexIndex].vertexName;
+				cout << nodes[nodes[i].sourceIndex].vertexName;
 			}
 			else
 			{
@@ -144,12 +144,56 @@ int main(int argc, char* argv[])
 	};
 	printNodes();
 	
-	bool tryAgain;
+	auto getUnwizitedNodeIndexWithMinVal = [&]() {
+		size_t minVal = SIZE_MAX;
+		size_t index = SIZE_MAX;
+		for (size_t i = 0; i < vertexesCount; ++i)
+		{
+			if (!nodes[i].isVisited &&
+				//nodes[i].distance > 0 &&
+				nodes[i].distance < minVal)
+			{
+				minVal = nodes[i].distance;
+				index = i;
+			}
+		}
+		return index;
+	};
+
+	auto findSourceChildrenDistances = [&] (size_t sourceIndex, bool & hasChanged) {
+		for (size_t destIndex = 0; destIndex < vertexesCount; ++destIndex)
+		{
+			if (//nodes[sourceIndex].distance > 0 &&
+				nodes[sourceIndex].distance < SIZE_MAX &&
+				nodes[destIndex].distance < nodes[sourceIndex].distance + edges[sourceIndex][destIndex])
+			{
+				hasChanged = true;
+				nodes[destIndex].distance = nodes[sourceIndex].distance + edges[sourceIndex][destIndex];
+				nodes[destIndex].sourceIndex = sourceIndex;
+				printNodes();
+			}
+		}
+		nodes[sourceIndex].isVisited = true;
+	};
+	bool hasChanges;
+	findSourceChildrenDistances(sourceVertexIndex, hasChanges);
 	do
 	{
-		size_t minDistanceVal = SIZE_MAX;
-		size_t index = SIZE_MAX;
-			printNodes();
-	} while (tryAgain);
+		hasChanges = false;
+		size_t nextIndex = getUnwizitedNodeIndexWithMinVal();
+		if (nextIndex < SIZE_MAX)
+		{
+			findSourceChildrenDistances(nextIndex, hasChanges);
+		}
+	} while (hasChanges);
+	
+	for (size_t i = 0; i < vertexesCount; ++i)
+	{
+		if (!nodes[i].isVisited)
+		{
+			nodes[i].isVisited = true;
+			printNodes;
+		}
+	}
 	return EXIT_SUCCESS;
 }
