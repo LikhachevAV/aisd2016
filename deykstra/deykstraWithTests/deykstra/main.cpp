@@ -146,14 +146,16 @@ int main(int argc, char* argv[])
 	printNodes();
 	// add printing vector with source Node vertex only!
 
-	auto getMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
+	auto findMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
 		size_t minDistanceVal = SIZE_MAX;
 		size_t index = SIZE_MAX;
 		for (size_t j = 0; j < vertexesCount; ++j)
 		{
-			if (edges[sourceNodeIndex][j] < minDistanceVal && edges[sourceNodeIndex][j] > 0)
+			if (edges[sourceNodeIndex][j] < SIZE_MAX &&
+				edges[sourceNodeIndex][j] > 0 &&
+				edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance < minDistanceVal)
 			{
-				minDistanceVal = edges[sourceNodeIndex][j];
+				minDistanceVal = edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance;
 				index = j;
 			}
 		}
@@ -165,8 +167,14 @@ int main(int argc, char* argv[])
 			nodes[index].isFinal = true;
 		}
 	};	
-	getMinSourceNodeIndex(sourceVertexIndex, nodes);
+	findMinSourceNodeIndex(sourceVertexIndex, nodes);
 	printNodes();
+
+	/*auto findNextMinSourceNodeIndex = [&]() {
+
+	};
+	findNextMinSourceNodeIndex();
+	printNodes();*/
 
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
