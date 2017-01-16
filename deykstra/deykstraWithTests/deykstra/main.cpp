@@ -188,12 +188,11 @@ int main(int argc, char* argv[])
 				{
 					minDistanceVal = edges[i][j] + nodes[i].distance;
 					index = j;
+					nodes[index].prevVertexIndex = i;
+					nodes[index].distance = minDistanceVal;
 				}
 				if (minDistanceVal < SIZE_MAX && index < SIZE_MAX && !nodes[index].isFinal)
 				{
-					nodes[index].prevVertexIndex = i;
-					nodes[index].distance = minDistanceVal;
-					nodes[index].prevVertexIndex = i;
 					nodes[index].isFinal = true;
 					finalNodes.push_back(nodes[index]);
 				}
