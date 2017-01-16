@@ -147,13 +147,14 @@ int main(int argc, char* argv[])
 	};
 	printNodes();
 
+/*	size_t minDistanceVal = SIZE_MAX;
+	size_t index = SIZE_MAX;
 	auto findMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
-		size_t minDistanceVal = SIZE_MAX;
-		size_t index = SIZE_MAX;
 		for (size_t j = 0; j < vertexesCount; ++j)
 		{
 			if (edges[sourceNodeIndex][j] < SIZE_MAX &&
 				edges[sourceNodeIndex][j] > 0 &&
+				!nodes[j].isFinal &&
 				edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance < minDistanceVal)
 			{
 				minDistanceVal = edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance;
@@ -168,16 +169,39 @@ int main(int argc, char* argv[])
 			nodes[index].isFinal = true;
 			finalNodes.push_back(nodes[index]);
 		}
-	};	
-	findMinSourceNodeIndex(sourceVertexIndex, nodes);
+	};	*/
+	//findMinSourceNodeIndex(sourceVertexIndex, nodes);
+	//printNodes();
+	
+	while (finalNodes.size() < vertexesCount)
+	{
+		size_t minDistanceVal = SIZE_MAX;
+		size_t index = SIZE_MAX;
+		for (size_t ind = 0; ind < finalNodes.size(); ++ind)
+		{
+			for (size_t j = 0; j < vertexesCount; ++j)
+			{
+				if (edges[ind][j] < SIZE_MAX &&
+					edges[ind][j] > 0 &&
+					!nodes[j].isFinal &&
+					edges[ind][j] + nodes[ind].distance < minDistanceVal)
+				{
+					minDistanceVal = edges[ind][j] + nodes[ind].distance;
+					index = j;
+				}
+			}
+			if (minDistanceVal < SIZE_MAX && index < SIZE_MAX && !nodes[index].isFinal)
+			{
+				nodes[index].prevVertexIndex = ind;
+				nodes[index].distance = minDistanceVal;
+				nodes[index].prevVertexIndex = ind;
+				nodes[index].isFinal = true;
+				finalNodes.push_back(nodes[index]);
+			}
+			printNodes();
+		}
+	}
 	printNodes();
-
-	/*auto findNextMinSourceNodeIndex = [&]() {
-
-	};
-	findNextMinSourceNodeIndex();
-	printNodes();*/
-
 	// крутим в цикле, заполняем вектор (поиск временных и постоянных меток, заполняем вектор кратчайшего пути)
 	cout << "Dont worry, be happy!" << endl;
 	return EXIT_SUCCESS;
