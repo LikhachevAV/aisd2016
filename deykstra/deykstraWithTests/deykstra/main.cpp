@@ -144,9 +144,10 @@ int main(int argc, char* argv[])
 	};
 	printNodes();
 	
+	size_t minVal = SIZE_MAX;
+	size_t index = SIZE_MAX;
+
 	auto getUnwizitedNodeIndexWithMinVal = [&]() {
-		size_t minVal = SIZE_MAX;
-		size_t index = SIZE_MAX;
 		for (size_t i = 0; i < vertexesCount; ++i)
 		{
 			if (!nodes[i].isVisited &&
@@ -164,27 +165,31 @@ int main(int argc, char* argv[])
 		{
 			if (nodes[sourceIndex].distance < SIZE_MAX &&
 				edges[sourceIndex][destIndex] < SIZE_MAX &&
-				(nodes[destIndex].distance > nodes[sourceIndex].distance + edges[sourceIndex][destIndex]))
+				(nodes[destIndex].distance > nodes[sourceIndex].distance + edges[sourceIndex][destIndex]) &&
+				edges[sourceIndex][destIndex] > 0)
 			{
-				hasChanged = true;
 				nodes[destIndex].distance = nodes[sourceIndex].distance + edges[sourceIndex][destIndex];
 				nodes[destIndex].sourceIndex = sourceIndex;
 				printNodes();
 			}
 		}
 		nodes[sourceIndex].isVisited = true;
+		hasChanged = true;
 	};
-	bool hasChanges;
-	findSourceChildrenDistances(sourceVertexIndex, hasChanges);
+
+	bool wasChanged = true;;
+	findSourceChildrenDistances(sourceVertexIndex, wasChanged);
 	do
 	{
-		hasChanges = false;
+		minVal = SIZE_MAX;
+		index = SIZE_MAX;
+		wasChanged = false;
 		size_t nextIndex = getUnwizitedNodeIndexWithMinVal();
 		if (nextIndex < SIZE_MAX)
 		{
-			findSourceChildrenDistances(nextIndex, hasChanges);
+			findSourceChildrenDistances(nextIndex, wasChanged);
 		}
-	} while (hasChanges);
+	} while (wasChanged);
 	
 	for (size_t i = 0; i < vertexesCount; ++i)
 	{
@@ -194,5 +199,6 @@ int main(int argc, char* argv[])
 			printNodes;
 		}
 	}
+	printNodes();
 	return EXIT_SUCCESS;
 }
