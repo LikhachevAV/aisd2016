@@ -146,32 +146,6 @@ int main(int argc, char* argv[])
 		cout << endl;
 	};
 	printNodes();
-
-/*	size_t minDistanceVal = SIZE_MAX;
-	size_t index = SIZE_MAX;
-	auto findMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
-		for (size_t j = 0; j < vertexesCount; ++j)
-		{
-			if (edges[sourceNodeIndex][j] < SIZE_MAX &&
-				edges[sourceNodeIndex][j] > 0 &&
-				!nodes[j].isFinal &&
-				edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance < minDistanceVal)
-			{
-				minDistanceVal = edges[sourceNodeIndex][j] + nodes[sourceNodeIndex].distance;
-				index = j;
-			}
-		}
-		if (minDistanceVal < SIZE_MAX)
-		{
-			nodes[index].prevVertexIndex = sourceNodeIndex;
-			nodes[index].distance = minDistanceVal;
-			nodes[index].prevVertexIndex = sourceNodeIndex;
-			nodes[index].isFinal = true;
-			finalNodes.push_back(nodes[index]);
-		}
-	};	*/
-	//findMinSourceNodeIndex(sourceVertexIndex, nodes);
-	//printNodes();
 	
 	while (finalNodes.size() < vertexesCount)
 	{
@@ -179,6 +153,7 @@ int main(int argc, char* argv[])
 		size_t index = SIZE_MAX;
 		for (size_t i = 0; i < finalNodes.size(); ++i)
 		{
+			
 			for (size_t j = 0; j < vertexesCount; ++j)
 			{
 				if (edges[i][j] < SIZE_MAX &&
@@ -201,8 +176,5 @@ int main(int argc, char* argv[])
 			printNodes();
 		}
 	}
-	printNodes();
-	cout << "Dont worry, be happy!" << endl;
-	getchar();
 	return EXIT_SUCCESS;
 }
