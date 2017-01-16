@@ -93,11 +93,13 @@ int main(int argc, char* argv[])
 		return nodes;
 	};
 
+	vector<Node> finalNodes;
 	vector<Node> nodes = getInitedNodesVector(vertexesCount);
 	auto initSourceVertex = [&]() {
 		nodes[sourceVertexIndex].distance = 0;
 		nodes[sourceVertexIndex].prevVertexIndex = sourceVertexIndex;
 		nodes[sourceVertexIndex].isFinal = true;
+		finalNodes.push_back(nodes[sourceVertexIndex]);
 	};
 	initSourceVertex();
 
@@ -144,7 +146,6 @@ int main(int argc, char* argv[])
 		cout << endl;
 	};
 	printNodes();
-	// add printing vector with source Node vertex only!
 
 	auto findMinSourceNodeIndex = [&](size_t sourceNodeIndex, vector<Node> & nodes) {
 		size_t minDistanceVal = SIZE_MAX;
@@ -165,6 +166,7 @@ int main(int argc, char* argv[])
 			nodes[index].distance = minDistanceVal;
 			nodes[index].prevVertexIndex = sourceNodeIndex;
 			nodes[index].isFinal = true;
+			finalNodes.push_back(nodes[index]);
 		}
 	};	
 	findMinSourceNodeIndex(sourceVertexIndex, nodes);
