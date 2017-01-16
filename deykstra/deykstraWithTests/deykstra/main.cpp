@@ -150,7 +150,6 @@ int main(int argc, char* argv[])
 		for (size_t i = 0; i < vertexesCount; ++i)
 		{
 			if (!nodes[i].isVisited &&
-				//nodes[i].distance > 0 &&
 				nodes[i].distance < minVal)
 			{
 				minVal = nodes[i].distance;
@@ -163,9 +162,9 @@ int main(int argc, char* argv[])
 	auto findSourceChildrenDistances = [&] (size_t sourceIndex, bool & hasChanged) {
 		for (size_t destIndex = 0; destIndex < vertexesCount; ++destIndex)
 		{
-			if (//nodes[sourceIndex].distance > 0 &&
-				nodes[sourceIndex].distance < SIZE_MAX &&
-				nodes[destIndex].distance < nodes[sourceIndex].distance + edges[sourceIndex][destIndex])
+			if (nodes[sourceIndex].distance < SIZE_MAX &&
+				edges[sourceIndex][destIndex] < SIZE_MAX &&
+				(nodes[destIndex].distance > nodes[sourceIndex].distance + edges[sourceIndex][destIndex]))
 			{
 				hasChanged = true;
 				nodes[destIndex].distance = nodes[sourceIndex].distance + edges[sourceIndex][destIndex];
