@@ -76,17 +76,23 @@ int main(int argc, char* argv[])
 		}
 	};
 	printCititesWithIndexes();
+
+	auto getVertexIndex = [&]() {
+		size_t index = SIZE_MAX;
+		while (index == SIZE_MAX)
+		{
+			if (!(cin >> index) || index > vertexesCount - 1)
+			{
+				cout << "Error! Vertex index must be between 0 and " << vertexesCount - 1
+					<< '!' << endl;
+			}
+		}
+		return index;
+	};
+
 	cout << endl;
 	cout << "Please, enter source vertex index (0 to " << vertexesCount - 1 << "): ";
-	size_t sourceVertexIndex = SIZE_MAX;
-	if (!(cin >> sourceVertexIndex) || sourceVertexIndex > vertexesCount - 1)
-	{
-		cout << "Error! Source vertex index must be between 0 and " << vertexesCount - 1
-			<< '!' << endl;
-		return EXIT_FAILURE;
-	}
-	cout << endl;
-
+	size_t sourceVertexIndex = getVertexIndex();
 	// инициализация вектора с вершинами
 	auto getInitedNodesVector = [&](size_t count) {
 		vector<Node> nodes(count);
@@ -206,6 +212,10 @@ int main(int argc, char* argv[])
 	}
 	printNodes();
 
+	auto printPathToDestVertex = [&](size_t dest) {
+		
+	};
+
 	auto handleMenuCommand = [&]() {
 		bool exit = false;
 		do
@@ -220,18 +230,17 @@ int main(int argc, char* argv[])
 			cin >> answer;
 			if (cin.eof() || answer == 'E' || answer == 'e')
 			{
-				cout << "Exit" << endl; //TODO: delete this
 				exit = true;
 			} else
 			if (answer == 'C' || answer == 'c')
 			{
-				cout << "See cities table" << endl; //TODO: delete this
 				printCititesWithIndexes();
 			} else
 			if (answer == 'D' || answer == 'd')
 			{
-				cout << "Print path" << endl; //TODO: delete this
-				//TODO print path
+				cout << "Please, enter destination city index: ";
+				size_t destVertexIndex = getVertexIndex();
+				printPathToDestVertex(destVertexIndex);
 			}
 			else
 			{
