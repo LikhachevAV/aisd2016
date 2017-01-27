@@ -213,7 +213,30 @@ int main(int argc, char* argv[])
 	printNodes();
 
 	auto printPathToDestVertex = [&](size_t dest) {
-		
+		if (nodes[dest].distance < SIZE_MAX)
+		{
+			size_t curIndex = dest;
+			vector<string> path;
+			do
+			{
+				path.push_back(nodes[curIndex].vertexName);
+				curIndex = nodes[curIndex].sourceIndex;
+				if (curIndex == dest)
+				{
+					break;
+				}
+			} while (curIndex != sourceVertexIndex);
+			path.push_back(nodes[sourceVertexIndex].vertexName);
+			for (size_t i = path.size() - 1; i != 0; --i)
+			{
+				cout << path[i] << "->";
+			}
+			cout << path[0] << endl;
+		}
+		else
+		{
+			cout << "Vertex " << nodes[sourceVertexIndex].vertexName << " have not path to " << nodes[dest].vertexName << endl;
+		}
 	};
 
 	auto handleMenuCommand = [&]() {
