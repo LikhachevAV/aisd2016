@@ -66,12 +66,17 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
 		}
 	}
-	cout << "Entered graph have the following vertexes:" << endl
-		<< "Index" << '\t' << "vertex" << endl << endl;
-	for (size_t i = 0; i < vertexesCount; ++i)
-	{
-		cout << i << '\t' << vertexNames[i] << endl;
-	}
+	auto printCititesWithIndexes = [&]() {
+		cout << endl;
+		cout << "Entered graph have the following vertexes:" << endl
+			<< "Index" << '\t' << "vertex" << endl;
+		for (size_t i = 0; i < vertexesCount; ++i)
+		{
+			cout << i << '\t' << vertexNames[i] << endl;
+		}
+	};
+	printCititesWithIndexes();
+	cout << endl;
 	cout << "Please, enter source vertex index (0 to " << vertexesCount - 1 << "): ";
 	size_t sourceVertexIndex = SIZE_MAX;
 	if (!(cin >> sourceVertexIndex) || sourceVertexIndex > vertexesCount - 1)
@@ -221,7 +226,7 @@ int main(int argc, char* argv[])
 			if (answer == 'C' || answer == 'c')
 			{
 				cout << "See cities table" << endl; //TODO: delete this
-				//TODO print cities table
+				printCititesWithIndexes();
 			} else
 			if (answer == 'D' || answer == 'd')
 			{
